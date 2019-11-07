@@ -1,0 +1,16 @@
+div.posEntrada(ng-controller = "LoginCtrl" )
+
+	div.posError(ng-if="estadoEntrar == 'ERROR' || estadoCrear == 'ERROR' ")
+		span * Se ha producido un error
+	div.posError(ng-if="estadoEntrar == 'ERRORCREDENCIALES'")
+		span * El Campo usuario o contraseña no es correcto
+
+
+	div.posTituloCaja
+		h1 {{literales.login.entrar.modoEntrar}}
+	
+	div
+		h3.posTipoLogin(ng-click="loginConSSO()") {{literales.login.entrar.conSSO}}
+
+		h3.posTipoLogin(ng-click="desplegarFormulario()") {{literales.login.entrar.titulo}}
+		include login.pug

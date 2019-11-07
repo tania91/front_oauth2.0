@@ -1,0 +1,93 @@
+div
+	div(ng-controller = "LoginCtrl")
+		div.posTituloRegistro
+			h1 {{literales.login.registro.titulo}} 
+
+		form(name="registroForm").posContenidoRegistro
+			.contenedorRegistro(class="md-no-momentum")
+				md-input-container.md-icon-left-registro(class="md-icon-float md-block")
+					div
+						label.posLoginEntrada Usuario
+						md-icon(md-svg-src="/PFG/oauth2.0/app/image/identidad.svg" class="name")
+						input(ng-model="registro.usuario" name="usuario" type="text" required md-select-on-focus)
+					div
+						div(ng-messages="registroForm.usuario.$error" role="alert") 
+							div(ng-message="required" class="my-message") El campo usuario no puede estar vacio
+					div(ng-if="usuarioExiste" role="alert")
+						div(class="my-message") 
+							span.tamError El usuario existe
+			.contenedorRegistro(class="md-no-momentum")
+				md-input-container.md-icon-left-registro(class="md-icon-float md-block")
+					div
+						label.posLoginEntrada Contraseña
+						md-icon(md-svg-src="/PFG/oauth2.0/app/image/contrasenia.svg" class="contrasenia")
+						input(type="{{inputType1}}" name="contrasenia" ng-model="registro.contrasenia" pattern="[a-zA-Z0-9]{6,15}"  required md-select-on-focus )
+					div.posVisibleContrasenia
+						img.posVisualizarRegistro(src="/PFG/oauth2.0/app/image/noVisible.png", ng-click="hacerVisible1()" ng-if="inputType1=='password' ")
+						img.posVisualizarRegistro(src="/PFG/oauth2.0/app/image/visible.png", ng-click="hacerVisible1()" ng-if="inputType1=='text' ")
+
+					div
+						div(ng-messages="registroForm.contrasenia.$error" role="alert") 
+							div(ng-message="required" class="my-message") El campo contraseña no puede estar vacio
+							div(ng-message="pattern" class="my-message") La cotraseña debe contener lentras en mayuscula y minuscula, numeros y tener de 6 a 15 caracteres.
+						
+			.contenedorRegistro(class="md-no-momentum")
+				md-input-container.md-icon-left-registro(class="md-icon-float md-block")
+					div
+						label.posLoginEntrada Repite ontraseña
+						md-icon(md-svg-src="/PFG/oauth2.0/app/image/contrasenia.svg" class="contrasenia")
+						input(type="{{inputType2}}" name="contrasenia2" ng-model="registro.contrasenia2" pattern="[a-zA-Z0-9]{6,15}"  required  md-select-on-focus ng-change="comprobar(registro.contrasenia, registro.contrasenia2, 'sontrasenia')")
+					div.posVisibleContrasenia
+						img.posVisualizarRegistro(src="/PFG/oauth2.0/app/image/noVisible.png", ng-click="hacerVisible2()" ng-if="inputType2=='password' ")
+						img.posVisualizarRegistro(src="/PFG/oauth2.0/app/image/visible.png", ng-click="hacerVisible2()" ng-if="inputType2=='text' ")
+
+					div
+						div(ng-messages="registroForm.contrasenia2.$error" role="alert" multiple) 
+							div(ng-message="required" class="my-message") El campo contraseña no puede estar vacio
+							div(ng-message="pattern" class="my-message") La cotraseña debe contener lentras en mayuscula y minuscula, numeros y tener de 6 a 15 caracteres.
+						div(ng-if="equalCont" role="alert")
+							div(class="my-message") 
+								span.tamError Las contraseñas no coinciden
+			.contenedorRegistro(class="md-no-momentum")
+				md-input-container.md-icon-left-registro(class="md-icon-float md-block")
+					div
+						label.posLoginEntrada Nombre
+						md-icon(md-svg-src="/PFG/oauth2.0/app/image/identidad.svg" class="name")
+						input(ng-model="registro.nombre" name ="nombre" type="text" required md-select-on-focus)
+					div
+						div(ng-messages="registroForm.nombre.$error" role="alert") 
+							div(ng-message="required" class="my-message") El campo usuario no puede estar vacio
+			.contenedorRegistro(class="md-no-momentum")
+				md-input-container.md-icon-left-registro(class="md-icon-float md-block")
+					div
+						label.posLoginEntrada Apellido
+						md-icon(md-svg-src="/PFG/oauth2.0/app/image/identidad.svg" class="name")
+						input(ng-model="registro.apellidos" name="apellidos" type="text" required md-select-on-focus)
+					div
+						div(ng-messages="registroForm.apellidos.$error" role="alert") 
+							div(ng-message="required" class="my-message") El campo usuario no puede estar vacio
+			.contenedorRegistro(class="md-no-momentum")
+				md-input-container.md-icon-left-registro(class="md-icon-float md-block")
+					div
+						label.posLoginEntrada Email
+						md-icon(md-svg-src="/PFG/oauth2.0/app/image/email.svg" class="name")
+						input(ng-model="registro.email" name="email" type="email" required md-select-on-focus)
+					div
+						div(ng-messages="registroForm.email.$error" role="alert") 
+							div(ng-message="required" class="my-message") El campo usuario no puede estar vacio
+			.contenedorRegistro(class="md-no-momentum")
+				md-input-container.md-icon-left-registro(class="md-icon-float md-block")
+					div
+						label.posLoginEntrada Repetir email
+						md-icon(md-svg-src="/PFG/oauth2.0/app/image/email.svg" class="name")
+						input(ng-model="registro.email2" name="email2" type="email" required md-select-on-focus ng-change="comprobar(registro.email, registro.email2, 'email')")
+					div
+						div(ng-messages="registroForm.email2.$error" role="alert" multiple) 
+							div(ng-message="required" class="my-message") El campo usuario no puede estar vacio
+					div(ng-if="equalEmail" role="alert")
+						div(class="my-message") 
+							span.tamError El email no coincide
+
+			div
+				input#menuBoton.botonRegistrar(type="submit", value="Registrarse", ng-click="crearRegistro()")
+	

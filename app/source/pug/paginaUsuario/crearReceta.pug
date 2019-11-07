@@ -1,0 +1,66 @@
+div.saltoContenedor(ng-controller = 'CrearRecetaCtrl')
+	div
+		include ../include/errores.pug
+	div(ng-if="estadoDevolverRecetas == 'OK' ")
+		h2 La receta se ha añadido con exito. 
+	div.contenedorTitlo.tituloRecetaUsuario(ng-if="estadoVerificarRecetas == 'HAYDATOS' ")
+		h2#tituloReceta {{literales.recetas.aniadeReceta}}
+	form(name="recetaForm" ng-show="estadoVerificarRecetas == 'HAYDATOS' " ) 
+		md-content.contenedorDetalle
+			md-input-container.md-block.md-input-has-value
+				div
+					img.imagenCrearReceta.cajaImagenCrear(id="recetaImagen"  src="/PFG/oauth2.0/app/image/gorroGris.png" rname="imagen" equired md-select-on-focus)
+				div
+					input#botonCargarImagen.inputfile(type="file" ng-file-model="fileImagen" )
+					label.botonAniadir(for="botonCargarImagen" )
+							span.nombreBoton Seleccionar archivo
+				div(ng-messages="recetaForm.imagen.$error" role="alert" multiple) 
+					div(ng-message="required" class="my-message") Añade la imagen de la receta
+					
+				
+			div.contenedorDetalleReceta 
+				
+				div
+					div
+						h2 {{literales.recetas.nombre}}
+							a.campoObligatorio *
+					md-content.descripcionContenedor
+						md-input-container.md-block.md-input-has-value
+							div.md-resize-wrapper
+								textarea.contenedorNombre(name="nombre" ng-model="receta.nombreReceta" md-maxlength="50" required md-select-on-focus)
+							div(ng-messages="recetaForm.nombre.$error" role="alert" multiple) 
+								div(ng-message="required" class="my-message") El nombre de la receta no puede ser vacio
+								div(ng-message="md-maxlength" class="my-message")  La descripcion no puede tenel más de 20 caracteres
+					p
+				div
+					div
+						h2 {{literales.recetas.ingredientes}} 
+							a.campoObligatorio *
+					md-content.descripcionContenedor
+						md-input-container.md-block.md-input-has-value
+							div.md-resize-wrapper
+								textarea.contenedorIngredientes(name="ingredientes" ng-model="receta.ingredientesReceta" md-maxlength="500" required md-select-on-focus)
+							div(ng-messages="recetaForm.ingredientes.$error" role="alert" multiple) 
+								div(ng-message="required" class="my-message") La descripcion de la receta no puede ser vacia 
+								div(ng-message="md-maxlength" class="my-message")  La descripcion no puede tenel más de 500 caracteres
+					p
+				div
+					div
+						h2 {{literales.recetas.descripcion}} 
+							a.campoObligatorio *
+					md-content.descripcionContenedor
+						md-input-container.md-block.md-input-has-value
+							div.md-resize-wrapper
+								textarea.contenedorDescripcion(name="descripcion" ng-model="receta.descripcionReceta" md-maxlength="700" required md-select-on-focus)
+							div(ng-messages="recetaForm.descripcion.$error" role="alert" multiple) 
+								div(ng-message="required" class="my-message") La descripcion de la receta no puede ser vacia 
+								div(ng-message="md-maxlength" class="my-message")  La descripcion no puede tenel más de 500 caracteres
+		
+			div.botonDetalleReceta 
+				input.botonRecoger(type="submit" value="Guardar" ng-click="recogerImagen()")
+				input.botonRecoger.posBotonVolver(type="button" value="Volver" ng-click="volver()")
+
+
+
+
+

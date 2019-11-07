@@ -1,0 +1,107 @@
+#cabecera{
+	background: #99ff99;
+    border-radius: 143px 0px;
+    height: 170px;
+}
+#fondoCabecera{
+	background: #333333;
+	width: 100%;
+    margin-left: -8px;
+    margin-top: -8px;
+}
+#subtitulo{
+	font-family: cursive;
+    margin-left: 20%;
+    margin-top: 32px;
+    width: 40%;
+}
+#imagenTitulo{
+	width: 120px;
+    margin-top: 26px;
+    margin-left: 70px;
+    cursor: pointer;
+}
+
+#titulo {
+
+    color: #333333;
+    width: 50%;
+}
+#titulo1{    
+	width: 44%;
+}
+
+#buscador{
+	margin-left: 16%;
+    position: absolute;
+    margin-top: -47px;
+}
+#tabla{
+
+	width: 100%;
+    margin-left: -62px;
+}
+#texto{
+	width: 84%;
+    margin-left: 15%;
+    margin-top: -120px;
+}
+
+.estiloBoton{
+	background-color: #333333;
+    color: #fff;
+    border-bottom-color: #333333;
+    border-top-color: #333333;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+}
+#estiloBuscador{
+	border-bottom-color: #333333;
+    border-top-color: #333333;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    border-bottom-width: 2px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-left-width: 2px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+#menu{
+	width: 65%;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: -7%;
+}
+#menuBoton{
+	background-color: #333333;
+    color: #fff;
+    border-bottom-color: #333333;
+    border-top-color: #333333;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    font-size: 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 1px 20px;
+    border-radius: 5px;
+}
+#menuBotonLogin{
+	background-color: #fff;
+    color: #000;
+    border-bottom-color: #333333;
+    border-top-color: #333333;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 1px 20px;
+    border-radius: 5px;
+    margin-left: 48px;
+}

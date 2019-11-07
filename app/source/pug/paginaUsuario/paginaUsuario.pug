@@ -1,0 +1,41 @@
+
+div(ng-controller = 'UsuarioCtrl')
+	div.posBotonesUsuario
+
+		input#menuBoton(type="button", value="Añadir Receta", name="buscador", ng-click="aniadirReceta()")
+		span.saludo {{literales.usuario.saludo}} {{usuario}}
+	
+	div
+		include ../include/errores.pug
+	div(ng-if="estadoDevolverRecetas == 'OK' ")
+		h2 La receta se ha añadido con exito.
+	div.contenedorTitlo.tituloRecetaUsuario(ng-if="estadoDevolverRecetas == 'HAYDATOS'")
+		h2#tituloReceta {{literales.recetas.receta}}
+	
+	div.contenedorPgn(ng-if="estadoDevolverRecetas == 'HAYDATOS' ") 
+		
+		table.tabla(ng-init='configPages()')
+			tr(ng-repeat="item in listadoRecetas | startFromGrid: currentPage * pageSize | limitTo: pageSize")
+				td(ng-if="item.posicion % 2 != 0")
+					img.imagenReceta.cajaImagen( ng-src="{{item.imagen}}")
+				 
+					p.separacionPie( ng-click="entrarPagina(item)")
+						span.nombreReceta {{item.nombreReceta}}
+
+			
+				td.recetaRight(ng-if="item.posicion % 2 == 0")
+					img.imagenReceta.cajaImagen( ng-src="{{item.imagen}}")
+				 
+					p.separacionPie( ng-click="entrarPagina(item)")
+						span.nombreReceta {{item.nombreReceta}}
+		div(class='btn-group').posBotonPaginacion
+			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1') {{literales.recetas.derecha}}
+			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage == page.no - 1' ng-click='setPage(page.no)' ng-repeat='page in pages') {{page.no}}
+			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage >= listadoRecetas.length/pageSize - 1' , ng-click='currentPage = currentPage + 1') {{literales.recetas.izquierda}}
+	div(ng-if="estadoDevolverRecetas == 'ERROR' ")
+		input#menuBoton(type="button", value="Volver", name="valver", ng-click="volver()")
+		
+
+			
+		
+		

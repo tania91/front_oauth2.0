@@ -1,0 +1,36 @@
+//-error
+
+
+
+div.errorContent(ng-if="estadoDevolverRecetas == 'ERROR' ")
+	div
+		img.iconoError2(src="/PFG/Front/app/image/error.png")
+	div.mensajeError2
+		h2 Se ha producido un error. 
+		p
+		h3 Vuelve a entrar en un momento.
+
+div.errorContent(ng-if="estadoVerificarRecetas == 'ERROR' ")
+	div
+		img.iconoError2(src="/PFG/oauth2.0/app/image/error.png")
+	div.mensajeError2
+		h2 Se ha producido un error. 
+		p
+		h3 La reseta no se ha podido guardar correctamente
+
+
+
+
+
+
+
+
+
+//- Warning
+div.warningContent(ng-if="estadoDevolverRecetas == 'WARNING' ")
+	div
+		img.iconoWarning(src="/PFG/oauth2.0/app/image/warning.png")
+	div.mensajeWarning
+		h2 Usted no tiene recetas. 
+		p
+		h3 Añade alguna pulsando el boton de arriba.

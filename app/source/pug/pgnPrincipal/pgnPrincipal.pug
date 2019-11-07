@@ -1,0 +1,56 @@
+
+		
+div.contenido(ng-controller = 'PgnPrincipalCtrl')
+	div.contenedorTitlo
+		h2#tituloReceta {{literales.recetas.receta}} 
+		
+	div.contenedorPgn(ng-if="estado=='NOHAYDATOS'") 
+		h1 {{literales.recetas.noReceta}} 
+	div.contenedorPgn(ng-if="estado=='HAYDATOS'") 
+		
+		table.tabla(ng-init='configPages()')
+			tr(ng-repeat="item in listadoRecetas  | startFromGrid: currentPage * pageSize | limitTo: pageSize")
+				td(ng-if="item.posicion % 2 != 0")
+					img.imagenReceta.cajaImagen( ng-src="{{item.imagen}}")
+				 
+					p.separacionPie( ng-click="entrarPagina(item)")
+						span.nombreReceta {{item.nombreReceta}}
+
+			
+				td.recetaRight(ng-if="item.posicion % 2 == 0")
+					img.imagenReceta.cajaImagen( ng-src="{{item.imagen}}")
+				 
+					p.separacionPie( ng-click="entrarPagina(item)")
+						span.nombreReceta {{item.nombreReceta}}
+		div(class='btn-group').posBotonPaginacion
+			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1')
+			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage == page.no - 1' ng-click='setPage(page.no)' ng-repeat='page in pages') {{page.no}}
+			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage >= listadoRecetas.length/pageSize - 1' , ng-click='currentPage = currentPage + 1')
+		
+
+			
+		//- tr
+		//- 	div
+
+		//- 		input(type="file" ng-file-model="fileImagen" )
+				
+		//- 		img(id="recetaImagen")
+		//- 	div 
+				
+		//- 		div
+		//- 			div
+		//- 				span {{}} Nombre receta
+		//- 				a.campoObligatorio *
+		//- 			div
+		//- 				input.textoLogin(type="text"  ng-model="receta.nombreReceta" required )
+		//- 			p
+		//- 		div
+		//- 			div
+		//- 				span {{}} Descripcion receta 
+		//- 				a.campoObligatorio *
+		//- 			div
+		//- 				input.textoLogin(type="text"  ng-model="receta.descripcionReceta" required )
+		//- 			p
+		//- 	div 
+		//- 		input(type="submit" value="Recoger" ng-click="recogerImagen()")
+		

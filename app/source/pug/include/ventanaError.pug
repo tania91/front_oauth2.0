@@ -1,0 +1,10 @@
+div.fondoError
+div.modalContent
+	div
+		img.iconoError(src="/PFG/oauth2.0/app/image/error.png")
+	div.mensajeError
+		h3.texto1 Se ha producido un error
+		p
+		span.texto1.texto2 {{mensajeErrorAutorizacion}}
+		p
+		input.botonConnexion(type="button", value="Aceptar", name="buscador", ng-click="cancelar()")

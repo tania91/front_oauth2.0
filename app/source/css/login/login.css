@@ -1,0 +1,222 @@
+.posLogin{
+	margin-top: 159px;
+	padding-top: 1px;
+    padding-bottom: 150px;
+}
+.posEntrada{
+	background-color: #f2f2f2;
+    margin-bottom: 100px;
+    margin-top: 155px;
+    margin-left: 37%;
+    border-style: solid;
+    border-color: #99ff99;
+    border-radius: 28px;
+    width: 400px;
+    height: auto;
+}
+.textoLogin{
+	width: 250px !important;
+    height: 32px;
+    border-color: #333333;
+    border-radius: 5px;
+}
+.contenedorTextoLogin{
+	margin-top: 39px;
+    margin-left: 28px;
+    width: 350px;
+}
+.posBotonLogin{
+	margin-top: 25px !important;
+    margin-left: 206px !important;
+}
+.estiloBotonRegistro{
+	margin-top: 40px;
+    margin-left: 42px;
+    margin-bottom: 14px;
+    font-family: cursive;
+    color: #333333;
+}
+.posTituloCaja{
+	margin-left: 40px;
+	margin-top: 46px;
+	color: #660000;
+}
+.estiloAqui{
+	color: #b30000;
+    cursor: pointer;
+}
+
+.posTituloRegistro{
+	color: #660000;
+    margin-left: 550px;
+    margin-top: 169px;
+}
+.posContenidoRegistro{
+	background-color: #f2f2f2;
+    border-top-style: solid;
+    border-top-color: #99ff99;
+    width: 690px;
+    margin-left: 530px;
+    margin-top: 35px;
+    padding-bottom: 100px;
+    padding-top: 15px;
+    height: 703px;
+
+}
+.posDatosRegistro{
+	margin-top: 35px;
+    margin-left: 35px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.posCampoTextoRegistro{
+	margin-left: 240px;
+    margin-top: -24px;
+}
+.campoObligatorio{
+	color: #b30000;
+}
+.botonRegistro{
+	margin-left: 500px !important;
+    margin-top: 35px;
+}
+.posVisibleContrasenia{
+    margin-top: -18px;
+    margin-left: 282px;
+}
+invalid {
+	border: 2px solid #b30000;
+}
+.posError{
+    margin-top: 25px;
+    position: absolute;
+    margin-left: 20px;
+    color: #ff0000;
+}
+.modalContent{
+    height: 155px;
+    position: absolute;
+    margin-left: 34%;
+    margin-top: 20%;
+    border-color: #000000;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 5px;
+    width: 500px;
+    background-color: #fff6f6; 
+    z-index: 1000;
+}
+.texto1{
+    margin-left: 5%;
+}
+.texto2{
+    font-weight: bold;
+}
+.botonConnexion{
+    background-color: #333333;
+    color: #fff;
+    border-bottom-color: #333333;
+    border-top-color: #333333;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    font-size: 16px;
+    margin-left: 244px;
+    margin-top: 12px;
+    cursor: pointer;
+    padding: 1px 20px;
+    border-radius: 5px;
+}
+.fondoError{
+    position: absolute;
+    margin-left: -7px;
+    margin-top: 9%;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #808080;
+    opacity: 0.5;
+    height: 747px;
+}
+.mensajeError{
+    margin-left: 119px;
+}
+.iconoError{
+    width: 85px;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 24px;
+}
+.errorContent{
+    height: 155px;
+    margin-left: 32%;
+    margin-top: 8%;
+    border-color: #cc0000;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 46px;
+    width: 500px;
+    background-color: #fff6f6;
+    margin-bottom: 18%;
+}
+.iconoError2{
+    width: 105px;
+    position: absolute;
+    margin-top: 35px;
+    margin-left: 24px;
+}
+.mensajeError2{
+    margin-left: 150px;
+    padding-top: 20px;
+}
+.warningContent{
+    height: 155px;
+    margin-left: 32%;
+    margin-top: 8%;
+    border-color: #cc7a00;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 46px;
+    width: 500px;
+    background-color: #fbf5eceb;
+    margin-bottom: 18%;
+}
+.iconoWarning{
+    width: 83px;
+    position: absolute;
+    margin-top: 35px;
+    margin-left: 31px;
+}
+.mensajeWarning{
+    margin-left: 136px;
+    padding-top: 20px;
+}
+.posLoginEntrada{
+    margin-left: 76px;
+}
+.md-icon-left{
+    width: 266px;
+}
+.contenedorRegistro{
+    display: initial !important;
+}
+.tamError{
+    color: rgb(221,44,0);
+    font-size: 12px;
+}
+.md-icon-left-registro{
+    width: 497px !important;
+    margin-left: 57px !important;
+}
+.botonRegistrar{
+    margin-left: 448px !important;
+    margin-top: 22px;
+}
+.posVisualizarRegistro{
+    margin-left: 246px;
+}
+.posTipoLogin{
+    margin-left: 40px;
+    cursor: pointer;
+}
+.posTipoLogin:hover{
+    color: #666666;
+}

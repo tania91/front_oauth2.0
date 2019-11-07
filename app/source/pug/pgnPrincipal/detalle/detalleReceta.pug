@@ -1,0 +1,17 @@
+div.saltoContenedor(ng-controller = "DetalleRecetaPrincipalCtrl")
+	div.contenedorDetalle
+		div
+			div.posTituloCaja
+				h1.tituloRecetaDetalle.estiloTitulo {{detalle.nombreReceta}}
+			div
+				img.tamanioImagen.cajaImagen.saltoImagenDetalle(ng-src="{{detalle.imagen}}")
+	
+		div.contenedorTextoDetalle
+			h3 Ingrendientes
+			span {{detalle.ingredientes}}
+		div.contenedorTextoDetalle
+			h3 Preparacion
+			div
+				span {{detalle.descripcion}}
+		div
+			input#menuBoton.botonVolverDetalle(type="button", value="Volver", ng-click="volver()")

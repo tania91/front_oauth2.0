@@ -1,0 +1,118 @@
+.contenido{
+    margin-top: -60px;
+}
+.contenedorPgn{
+	width: 1326px;
+    margin-left: 286px;
+    background-color: #f2f2f2;
+}
+.tabla{
+	position: static;
+}
+.imagenReceta{
+	width: 380px;
+    height: 300px;
+	margin-top: 76px;
+    margin-right: 25px;
+    margin-bottom: 5px;
+    margin-left: 167px;
+}
+
+.imagenRecetaRight{
+    
+    margin-left: 270;
+}
+.recetaRight{
+
+    position: absolute;
+    margin-left: 582px;
+    margin-top: -499px;
+
+}
+
+.nombreReceta{
+	font-family: cursive;
+    font-size: 30px;
+    color: #333333;
+    cursor: pointer;
+    margin-left: 170px;
+}
+.nombreReceta:hover{
+    font-family: cursive;
+    font-size: 30px;
+    color: #333333;
+    cursor: pointer;
+    margin-left: 170px;
+    text-shadow: 3px 2px darkgrey;
+}
+.nombreRecetaRight{
+   
+    margin-left: 268px;
+}
+#tituloReceta{
+	margin-top: 158px;
+    padding-top: 60px;
+    margin-left: 44px;
+    font-family: cursive;
+    font-size: 50px;
+    color: #660000;
+}
+.contenedorTitlo{
+	border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: #99ff99;
+    width: 1326px;
+    margin-left: 287px;
+}
+
+.estiloPie{
+    margin-top: 20px;
+}
+.separador{
+    border-top-style: dashed;
+    border-top-color: #808080;
+    border-top-width: 2px;
+    margin-left: 3px;
+    margin-top: 5px;
+}
+.separador2{
+    border-top-style: dashed;
+    border-top-color: #808080;
+    border-top-width: 2px;
+    margin-right: 3px
+    margin-left: 3px;
+    margin-top: 5px;
+}
+.separacionPie{
+    margin-bottom: 50px;
+}
+.buttonPaginacion {
+    position: relative;
+    vertical-align: top;
+    height: 40px;
+    font-size: 22px;
+    color: white;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    background: #333333;
+    border: 0;
+    border-bottom: 2px solid #99ff99;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0 -2px #99ff99;
+    box-shadow: inset 0 -2px #99ff99;
+}
+.buttonPaginacion:active {
+   top: 1px;
+   outline: none;
+   -webkit-box-shadow: none;
+   box-shadow: none;
+}
+.buttonPaginacion:disabled {
+   outline: none;
+   -webkit-box-shadow: none;
+   box-shadow: none;
+   opacity: 0.5;
+}
+.posBotonPaginacion{
+    margin-left: 45%;
+}

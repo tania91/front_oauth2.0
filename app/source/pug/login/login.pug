@@ -1,0 +1,31 @@
+form(name="loginForm", ng-show="mostrarFormulario").contenedorTextoLogin
+	.contenedorRegistro(class="md-no-momentum")
+		md-input-container(class="md-icon-float md-block")
+			div
+				label.posLoginEntrada Usuario
+				md-icon(md-svg-src="/PFG/oauth2.0/app/image/identidad.svg" class="name")
+				input(ng-model="registro.usuario" name="usuario" type="text" required md-select-on-focus)
+			div
+				div(ng-messages="loginForm.usuario.$error" role="alert") 
+					div(ng-message="required" class="my-message") El campo usuario no puede estar vacio
+	.contenedorRegistro(class="md-no-momentum")
+		md-input-container(class="md-icon-float md-block")
+			div
+				label.posLoginEntrada Contraseña
+				md-icon(md-svg-src="/PFG/oauth2.0/app/image/contrasenia.svg" class="contrasenia")
+				input(type="{{inputType1}}"  name="contrasenia" ng-model="registro.contrasenia"   required md-select-on-focus)
+			div.posVisibleContrasenia
+				img(src="/PFG/oauth2.0/app/image/noVisible.png", ng-click="hacerVisible1()" ng-if="inputType1=='password' ")
+				img(src="/PFG/oauth2.0/app/image/visible.png", ng-click="hacerVisible1()" ng-if="inputType1=='text' ")
+
+	
+			div
+				div(ng-messages="loginForm.contrasenia.$error" role="alert") 
+					div(ng-message="required" class="my-message") El campo contraseña no puede estar vacio
+	div
+		input#menuBoton.posBotonLogin(type="submit", value="Entrar", ng-click="loginSinSSO()")
+
+
+div.estiloBotonRegistro
+	span {{literales.login.entrar.noRegistrado1}}
+	a.estiloAqui( ng-click="crearCuenta()") {{literales.login.entrar.noRegistrado2}}
