@@ -1,0 +1,26 @@
+
+<div class="contenido" ng-controller="PgnPrincipalCtrl">
+  <div class="contenedorTitlo">
+    <h2 id="tituloReceta">{{literales.recetas.receta}} </h2>
+  </div>
+  <div class="contenedorPgn" ng-if="estado=='NOHAYDATOS'"> 
+    <h1>{{literales.recetas.noReceta}} </h1>
+  </div>
+  <div class="contenedorPgn" ng-if="estado=='HAYDATOS'"> 
+    <table class="tabla" ng-init="configPages()">
+      <tr ng-repeat="item in listadoRecetas  | startFromGrid: currentPage * pageSize | limitTo: pageSize">
+        <td ng-if="item.posicion % 2 != 0"><img class="imagenReceta cajaImagen" ng-src="{{item.imagen}}"/>
+          <p class="separacionPie" ng-click="entrarPagina(item)"><span class="nombreReceta">{{item.nombreReceta}}</span></p>
+        </td>
+        <td class="recetaRight" ng-if="item.posicion % 2 == 0"><img class="imagenReceta cajaImagen" ng-src="{{item.imagen}}"/>
+          <p class="separacionPie" ng-click="entrarPagina(item)"><span class="nombreReceta">{{item.nombreReceta}}</span></p>
+        </td>
+      </tr>
+    </table>
+    <div class="btn-group posBotonPaginacion">
+      <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage == 0" ng-click="currentPage = currentPage - 1"></button>
+      <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage == page.no - 1" ng-click="setPage(page.no)" ng-repeat="page in pages">{{page.no}}</button>
+      <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage &gt;= listadoRecetas.length/pageSize - 1" ng-click="currentPage = currentPage + 1"></button>
+    </div>
+  </div>
+</div>

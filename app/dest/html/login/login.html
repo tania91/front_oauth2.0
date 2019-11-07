@@ -1,0 +1,36 @@
+
+<form class="contenedorTextoLogin" name="loginForm" ng-show="mostrarFormulario">
+  <div class="contenedorRegistro md-no-momentum">
+    <md-input-container class="md-icon-float md-block">
+      <div>
+        <label class="posLoginEntrada">Usuario</label>
+        <md-icon class="name" md-svg-src="/PFG/oauth2.0/app/image/identidad.svg"></md-icon>
+        <input ng-model="registro.usuario" name="usuario" type="text" required="required" md-select-on-focus="md-select-on-focus"/>
+      </div>
+      <div>
+        <div ng-messages="loginForm.usuario.$error" role="alert"> 
+          <div class="my-message" ng-message="required">El campo usuario no puede estar vacio</div>
+        </div>
+      </div>
+    </md-input-container>
+  </div>
+  <div class="contenedorRegistro md-no-momentum">
+    <md-input-container class="md-icon-float md-block">
+      <div>
+        <label class="posLoginEntrada">Contraseña</label>
+        <md-icon class="contrasenia" md-svg-src="/PFG/oauth2.0/app/image/contrasenia.svg"></md-icon>
+        <input type="{{inputType1}}" name="contrasenia" ng-model="registro.contrasenia" required="required" md-select-on-focus="md-select-on-focus"/>
+      </div>
+      <div class="posVisibleContrasenia"><img src="/PFG/oauth2.0/app/image/noVisible.png" ng-click="hacerVisible1()" ng-if="inputType1=='password' "/><img src="/PFG/oauth2.0/app/image/visible.png" ng-click="hacerVisible1()" ng-if="inputType1=='text' "/></div>
+      <div>
+        <div ng-messages="loginForm.contrasenia.$error" role="alert"> 
+          <div class="my-message" ng-message="required">El campo contraseña no puede estar vacio</div>
+        </div>
+      </div>
+    </md-input-container>
+  </div>
+  <div>
+    <input class="posBotonLogin" id="menuBoton" type="submit" value="Entrar" ng-click="loginSinSSO()"/>
+  </div>
+</form>
+<div class="estiloBotonRegistro"><span>{{literales.login.entrar.noRegistrado1}}</span><a class="estiloAqui" ng-click="crearCuenta()">{{literales.login.entrar.noRegistrado2}}</a></div>

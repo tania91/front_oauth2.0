@@ -1,0 +1,25 @@
+
+<div class="errorContent" ng-if="estadoDevolverRecetas == 'ERROR' ">
+  <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+  <div class="mensajeError2">
+    <h2>Se ha producido un error. </h2>
+    <p></p>
+    <h3>Vuelve a entrar en un momento.</h3>
+  </div>
+</div>
+<div class="errorContent" ng-if="estadoVerificarRecetas == 'ERROR' ">
+  <div><img class="iconoError2" src="/PFG/oauth2.0/app/image/error.png"/></div>
+  <div class="mensajeError2">
+    <h2>Se ha producido un error. </h2>
+    <p></p>
+    <h3>La reseta no se ha podido guardar correctamente</h3>
+  </div>
+</div>
+<div class="warningContent" ng-if="estadoDevolverRecetas == 'WARNING' ">
+  <div><img class="iconoWarning" src="/PFG/oauth2.0/app/image/warning.png"/></div>
+  <div class="mensajeWarning">
+    <h2>Usted no tiene recetas. </h2>
+    <p></p>
+    <h3>Añade alguna pulsando el boton de arriba.</h3>
+  </div>
+</div>

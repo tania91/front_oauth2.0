@@ -1,0 +1,30 @@
+
+<div ng-controller="HomeCtrl">
+  <div><img id="imagenTitulo" src="/PFG/oauth2.0/app/image/gorro.png" ng-click="recargar()"/></div>
+  <div id="texto">
+    <table id="tabla">
+      <tr>
+        <td id="titulo">
+          <p>
+            <h1 id="titulo1">{{literales.cabecera.titulo1}}</h1>
+          </p>
+          <p>
+            <h3 id="subtitulo">{{literales.cabecera.titulo2}}</h3>
+          </p>
+        </td>
+        <td>
+          <table>
+            <tr id="buscador">
+              <td>
+                <input id="estiloBuscador" type="text" name="buscador.text" model="buscador"/>
+                <input class="estiloBoton" type="button" value="Buscar" name="buscador" ng-click=""/>
+                <input id="menuBotonLogin" ng-if="estadoVerificar == '' || estadoVerificar=='ERROR'" type="button" value="LogIn" name="buscador" ng-click="login()"/>
+                <input id="menuBotonLogin" ng-if="estadoVerificar=='OK'" type="button" value="LogOut" name="buscador" ng-click="logout()"/>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

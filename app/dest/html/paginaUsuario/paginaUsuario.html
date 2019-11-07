@@ -1,0 +1,58 @@
+
+<div ng-controller="UsuarioCtrl">
+  <div class="posBotonesUsuario">
+    <input id="menuBoton" type="button" value="Añadir Receta" name="buscador" ng-click="aniadirReceta()"/><span class="saludo">{{literales.usuario.saludo}} {{usuario}}</span>
+  </div>
+  <div>
+    <div class="errorContent" ng-if="estadoDevolverRecetas == 'ERROR' ">
+      <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+      <div class="mensajeError2">
+        <h2>Se ha producido un error. </h2>
+        <p></p>
+        <h3>Vuelve a entrar en un momento.</h3>
+      </div>
+    </div>
+    <div class="errorContent" ng-if="estadoVerificarRecetas == 'ERROR' ">
+      <div><img class="iconoError2" src="/PFG/oauth2.0/app/image/error.png"/></div>
+      <div class="mensajeError2">
+        <h2>Se ha producido un error. </h2>
+        <p></p>
+        <h3>La reseta no se ha podido guardar correctamente</h3>
+      </div>
+    </div>
+    <div class="warningContent" ng-if="estadoDevolverRecetas == 'WARNING' ">
+      <div><img class="iconoWarning" src="/PFG/oauth2.0/app/image/warning.png"/></div>
+      <div class="mensajeWarning">
+        <h2>Usted no tiene recetas. </h2>
+        <p></p>
+        <h3>Añade alguna pulsando el boton de arriba.</h3>
+      </div>
+    </div>
+  </div>
+  <div ng-if="estadoDevolverRecetas == 'OK' ">
+    <h2>La receta se ha añadido con exito.</h2>
+  </div>
+  <div class="contenedorTitlo tituloRecetaUsuario" ng-if="estadoDevolverRecetas == 'HAYDATOS'">
+    <h2 id="tituloReceta">{{literales.recetas.receta}}</h2>
+  </div>
+  <div class="contenedorPgn" ng-if="estadoDevolverRecetas == 'HAYDATOS' "> 
+    <table class="tabla" ng-init="configPages()">
+      <tr ng-repeat="item in listadoRecetas | startFromGrid: currentPage * pageSize | limitTo: pageSize">
+        <td ng-if="item.posicion % 2 != 0"><img class="imagenReceta cajaImagen" ng-src="{{item.imagen}}"/>
+          <p class="separacionPie" ng-click="entrarPagina(item)"><span class="nombreReceta">{{item.nombreReceta}}</span></p>
+        </td>
+        <td class="recetaRight" ng-if="item.posicion % 2 == 0"><img class="imagenReceta cajaImagen" ng-src="{{item.imagen}}"/>
+          <p class="separacionPie" ng-click="entrarPagina(item)"><span class="nombreReceta">{{item.nombreReceta}}</span></p>
+        </td>
+      </tr>
+    </table>
+    <div class="btn-group posBotonPaginacion">
+      <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage == 0" ng-click="currentPage = currentPage - 1">{{literales.recetas.derecha}}</button>
+      <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage == page.no - 1" ng-click="setPage(page.no)" ng-repeat="page in pages">{{page.no}}</button>
+      <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage &gt;= listadoRecetas.length/pageSize - 1" ng-click="currentPage = currentPage + 1">{{literales.recetas.izquierda}}</button>
+    </div>
+  </div>
+  <div ng-if="estadoDevolverRecetas == 'ERROR' ">
+    <input id="menuBoton" type="button" value="Volver" name="valver" ng-click="volver()"/>
+  </div>
+</div>

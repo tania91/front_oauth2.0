@@ -1,0 +1,624 @@
+
+.bloque{
+	width: 1903px;
+	overflow-x:hidden;
+}	
+
+
+.saltoContenedor{
+	margin-top: 200px !important;
+}
+.tamanioImagen{
+	width: 700px;
+    height: 500px;
+}
+.contenedorDetalle{
+	width: 1326px;
+    margin-left: 286px;
+    background-color: #f2f2f2;
+	border-top-style: solid;
+    border-top-width: 3px;
+    border-top-color: #99ff99;
+    padding-bottom: 50px;
+}
+.estiloTitulo{
+	text-transform: capitalize;
+}
+.cajaImagen{
+
+    border-top-style: groove;
+    border-bottom-style: ridge;
+    border-bottom-width: 4px;
+    border-left-style: groove;
+    border-right-style: ridge;
+    border-right-width: 4px;
+}
+.saltoImagenDetalle{
+	margin-left: 23%;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+.tituloRecetaDetalle{
+	margin-left: 148px;
+    margin-top: 125px;
+    color: #660000;
+}
+.contenedorTextoDetalle{
+	width: 1000px;
+    margin-left: 14%;
+    text-align: justify;
+}
+.botonVolverDetalle{
+	margin-top: 82px !important;
+    margin-left: 82% !important;
+}
+#cabecera{
+	background: #99ff99;
+    border-radius: 143px 0px;
+    height: 170px;
+}
+#fondoCabecera{
+	background: #333333;
+	width: 100%;
+    margin-left: -8px;
+    margin-top: -8px;
+}
+#subtitulo{
+	font-family: cursive;
+    margin-left: 20%;
+    margin-top: 32px;
+    width: 40%;
+}
+#imagenTitulo{
+	width: 120px;
+    margin-top: 26px;
+    margin-left: 70px;
+    cursor: pointer;
+}
+
+#titulo {
+
+    color: #333333;
+    width: 50%;
+}
+#titulo1{    
+	width: 44%;
+}
+
+#buscador{
+	margin-left: 16%;
+    position: absolute;
+    margin-top: -47px;
+}
+#tabla{
+
+	width: 100%;
+    margin-left: -62px;
+}
+#texto{
+	width: 84%;
+    margin-left: 15%;
+    margin-top: -120px;
+}
+
+.estiloBoton{
+	background-color: #333333;
+    color: #fff;
+    border-bottom-color: #333333;
+    border-top-color: #333333;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+}
+#estiloBuscador{
+	border-bottom-color: #333333;
+    border-top-color: #333333;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    border-bottom-width: 2px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-left-width: 2px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+#menu{
+	width: 65%;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: -7%;
+}
+#menuBoton{
+	background-color: #333333;
+    color: #fff;
+    border-bottom-color: #333333;
+    border-top-color: #333333;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    font-size: 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 1px 20px;
+    border-radius: 5px;
+}
+#menuBotonLogin{
+	background-color: #fff;
+    color: #000;
+    border-bottom-color: #333333;
+    border-top-color: #333333;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 1px 20px;
+    border-radius: 5px;
+    margin-left: 48px;
+}
+
+.posLogin{
+	margin-top: 159px;
+	padding-top: 1px;
+    padding-bottom: 150px;
+}
+.posEntrada{
+	background-color: #f2f2f2;
+    margin-bottom: 100px;
+    margin-top: 155px;
+    margin-left: 37%;
+    border-style: solid;
+    border-color: #99ff99;
+    border-radius: 28px;
+    width: 400px;
+    height: auto;
+}
+.textoLogin{
+	width: 250px !important;
+    height: 32px;
+    border-color: #333333;
+    border-radius: 5px;
+}
+.contenedorTextoLogin{
+	margin-top: 39px;
+    margin-left: 28px;
+    width: 350px;
+}
+.posBotonLogin{
+	margin-top: 25px !important;
+    margin-left: 206px !important;
+}
+.estiloBotonRegistro{
+	margin-top: 40px;
+    margin-left: 42px;
+    margin-bottom: 14px;
+    font-family: cursive;
+    color: #333333;
+}
+.posTituloCaja{
+	margin-left: 40px;
+	margin-top: 46px;
+	color: #660000;
+}
+.estiloAqui{
+	color: #b30000;
+    cursor: pointer;
+}
+
+.posTituloRegistro{
+	color: #660000;
+    margin-left: 550px;
+    margin-top: 169px;
+}
+.posContenidoRegistro{
+	background-color: #f2f2f2;
+    border-top-style: solid;
+    border-top-color: #99ff99;
+    width: 690px;
+    margin-left: 530px;
+    margin-top: 35px;
+    padding-bottom: 100px;
+    padding-top: 15px;
+    height: 703px;
+
+}
+.posDatosRegistro{
+	margin-top: 35px;
+    margin-left: 35px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.posCampoTextoRegistro{
+	margin-left: 240px;
+    margin-top: -24px;
+}
+.campoObligatorio{
+	color: #b30000;
+}
+.botonRegistro{
+	margin-left: 500px !important;
+    margin-top: 35px;
+}
+.posVisibleContrasenia{
+    margin-top: -18px;
+    margin-left: 282px;
+}
+invalid {
+	border: 2px solid #b30000;
+}
+.posError{
+    margin-top: 25px;
+    position: absolute;
+    margin-left: 20px;
+    color: #ff0000;
+}
+.modalContent{
+    height: 155px;
+    position: absolute;
+    margin-left: 34%;
+    margin-top: 20%;
+    border-color: #000000;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 5px;
+    width: 500px;
+    background-color: #fff6f6; 
+    z-index: 1000;
+}
+.texto1{
+    margin-left: 5%;
+}
+.texto2{
+    font-weight: bold;
+}
+.botonConnexion{
+    background-color: #333333;
+    color: #fff;
+    border-bottom-color: #333333;
+    border-top-color: #333333;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    font-size: 16px;
+    margin-left: 244px;
+    margin-top: 12px;
+    cursor: pointer;
+    padding: 1px 20px;
+    border-radius: 5px;
+}
+.fondoError{
+    position: absolute;
+    margin-left: -7px;
+    margin-top: 9%;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #808080;
+    opacity: 0.5;
+    height: 747px;
+}
+.mensajeError{
+    margin-left: 119px;
+}
+.iconoError{
+    width: 85px;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 24px;
+}
+.errorContent{
+    height: 155px;
+    margin-left: 32%;
+    margin-top: 8%;
+    border-color: #cc0000;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 46px;
+    width: 500px;
+    background-color: #fff6f6;
+    margin-bottom: 18%;
+}
+.iconoError2{
+    width: 105px;
+    position: absolute;
+    margin-top: 35px;
+    margin-left: 24px;
+}
+.mensajeError2{
+    margin-left: 150px;
+    padding-top: 20px;
+}
+.warningContent{
+    height: 155px;
+    margin-left: 32%;
+    margin-top: 8%;
+    border-color: #cc7a00;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 46px;
+    width: 500px;
+    background-color: #fbf5eceb;
+    margin-bottom: 18%;
+}
+.iconoWarning{
+    width: 83px;
+    position: absolute;
+    margin-top: 35px;
+    margin-left: 31px;
+}
+.mensajeWarning{
+    margin-left: 136px;
+    padding-top: 20px;
+}
+.posLoginEntrada{
+    margin-left: 76px;
+}
+.md-icon-left{
+    width: 266px;
+}
+.contenedorRegistro{
+    display: initial !important;
+}
+.tamError{
+    color: rgb(221,44,0);
+    font-size: 12px;
+}
+.md-icon-left-registro{
+    width: 497px !important;
+    margin-left: 57px !important;
+}
+.botonRegistrar{
+    margin-left: 448px !important;
+    margin-top: 22px;
+}
+.posVisualizarRegistro{
+    margin-left: 246px;
+}
+.posTipoLogin{
+    margin-left: 40px;
+    cursor: pointer;
+}
+.posTipoLogin:hover{
+    color: #666666;
+}
+.saludo{
+	margin-left: 55px;
+    font-weight: bold;
+    color: #660000;
+    font-size: 20px;
+}
+
+.posBotonesUsuario{
+	margin-left: 66%;
+    margin-top: 50px;
+}
+.tituloRecetaUsuario{
+	margin-top: -137px !important;
+}
+.imagenCrearReceta{
+	width: 100%;
+}
+.cajaImagenCrear{
+	border-style: groove;
+    border-width: 4px;
+    border-color: #801717;
+    width: 34%;
+    margin-left: 9%;
+    margin-top: 9%;
+    height: 403px;
+    margin-bottom: 35px;
+}
+.botonAniadir{
+	background-color: #333333;
+    color: #fff !important;
+    border-bottom-color: #333333;
+    border-top-color: #333333;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    width: 12% !important;
+    margin-top: -36px;
+    height: 37px;
+    position: absolute !important;
+    cursor: pointer;
+    border-radius: 5px;
+    transform: translate3d(0, 597px, 0) scale(1) !important;
+
+    
+}
+.inputfile{
+	display: none;
+}
+.iconoAniadir{
+	height: 20px;
+    padding: 8px;
+    margin-left: 6%;
+}
+.nombreBoton{
+	padding-top: 9px;
+    padding-left: 3px;
+    position: absolute;
+    font-size: 17px;
+}
+.contenedor{
+	width: 100%;
+}
+.contenedorDetalleReceta{
+	margin-top: 10%;
+    margin-left: 9%;
+}
+.botonDetalleReceta{
+	margin-top: 10%;
+    margin-left: 9%;
+}
+.contenedorDescripcion{
+	height: 300px !important;
+    width: 99% !important;
+    border-color: #333333 !important;
+    border-radius: 5px !important;
+    border-width: 2px !important;
+    background-color: #ffffff !important;
+}
+.descripcionContenedor{
+	width: 68%;
+	background-color: #f2f2f2;
+}
+.contenedorNombre{
+	height: 30px !important;
+    width: 99% !important;
+    border-color: #333333 !important;
+    border-radius: 5px !important;
+    border-width: 2px !important;
+    background-color: #ffffff !important;
+}
+.contenedorIngredientes{
+	height: 150px !important;
+    width: 99% !important;
+    border-color: #333333 !important;
+    border-radius: 5px !important;
+    border-width: 2px !important;
+    background-color: #ffffff !important;
+}
+.botonRecoger{
+	font-size: 100%;
+    background-color: #333333;
+    color: #fff;
+    border-bottom-color: #333333;
+    border-top-color: #333333;
+    border-right-color: #333333;
+    border-left-color: #333333;
+    width: 7%;
+    margin-left: 25.5%;
+    margin-top: -77px;
+    height: 37px;
+    cursor: pointer;
+    position: absolute;
+    border-radius: 5px;
+    padding: 7px;
+    position: absolute;
+    font-size: 19px;
+}
+label[for="botonCargarImagen"] path {
+  fill: #fff;
+}
+.posBotonVolver{
+	    margin-left: 35.5%;
+}
+.contenido{
+    margin-top: -60px;
+}
+.contenedorPgn{
+	width: 1326px;
+    margin-left: 286px;
+    background-color: #f2f2f2;
+}
+.tabla{
+	position: static;
+}
+.imagenReceta{
+	width: 380px;
+    height: 300px;
+	margin-top: 76px;
+    margin-right: 25px;
+    margin-bottom: 5px;
+    margin-left: 167px;
+}
+
+.imagenRecetaRight{
+    
+    margin-left: 270;
+}
+.recetaRight{
+
+    position: absolute;
+    margin-left: 582px;
+    margin-top: -499px;
+
+}
+
+.nombreReceta{
+	font-family: cursive;
+    font-size: 30px;
+    color: #333333;
+    cursor: pointer;
+    margin-left: 170px;
+}
+.nombreReceta:hover{
+    font-family: cursive;
+    font-size: 30px;
+    color: #333333;
+    cursor: pointer;
+    margin-left: 170px;
+    text-shadow: 3px 2px darkgrey;
+}
+.nombreRecetaRight{
+   
+    margin-left: 268px;
+}
+#tituloReceta{
+	margin-top: 158px;
+    padding-top: 60px;
+    margin-left: 44px;
+    font-family: cursive;
+    font-size: 50px;
+    color: #660000;
+}
+.contenedorTitlo{
+	border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: #99ff99;
+    width: 1326px;
+    margin-left: 287px;
+}
+
+.estiloPie{
+    margin-top: 20px;
+}
+.separador{
+    border-top-style: dashed;
+    border-top-color: #808080;
+    border-top-width: 2px;
+    margin-left: 3px;
+    margin-top: 5px;
+}
+.separador2{
+    border-top-style: dashed;
+    border-top-color: #808080;
+    border-top-width: 2px;
+    margin-right: 3px
+    margin-left: 3px;
+    margin-top: 5px;
+}
+.separacionPie{
+    margin-bottom: 50px;
+}
+.buttonPaginacion {
+    position: relative;
+    vertical-align: top;
+    height: 40px;
+    font-size: 22px;
+    color: white;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    background: #333333;
+    border: 0;
+    border-bottom: 2px solid #99ff99;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0 -2px #99ff99;
+    box-shadow: inset 0 -2px #99ff99;
+}
+.buttonPaginacion:active {
+   top: 1px;
+   outline: none;
+   -webkit-box-shadow: none;
+   box-shadow: none;
+}
+.buttonPaginacion:disabled {
+   outline: none;
+   -webkit-box-shadow: none;
+   box-shadow: none;
+   opacity: 0.5;
+}
+.posBotonPaginacion{
+    margin-left: 45%;
+}

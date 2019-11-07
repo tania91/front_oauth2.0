@@ -1,0 +1,21 @@
+
+<div class="saltoContenedor" ng-controller="DetalleRecetaUsuarioCtrl">
+  <div class="contenedorDetalle">
+    <div>
+      <div class="posTituloCaja">
+        <h1 class="tituloRecetaDetalle estiloTitulo">{{detalle.nombreReceta}}</h1>
+      </div>
+      <div><img class="tamanioImagen cajaImagen saltoImagenDetalle" ng-src="{{detalle.imagen}}"/></div>
+    </div>
+    <div class="contenedorTextoDetalle">
+      <h3>Ingrendientes</h3><span>{{detalle.ingredientes}}</span>
+    </div>
+    <div class="contenedorTextoDetalle">
+      <h3>Preparacion</h3>
+      <div><span>{{detalle.descripcion}}</span></div>
+    </div>
+    <div>
+      <input class="botonVolverDetalle" id="menuBoton" type="button" value="Volver" ng-click="volver()"/>
+    </div>
+  </div>
+</div>

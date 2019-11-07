@@ -1,0 +1,124 @@
+
+<div>
+  <div ng-controller="LoginCtrl">
+    <div class="posTituloRegistro">
+      <h1>{{literales.login.registro.titulo}} </h1>
+    </div>
+    <form class="posContenidoRegistro" name="registroForm">
+      <div class="contenedorRegistro md-no-momentum">
+        <md-input-container class="md-icon-left-registro md-icon-float md-block">
+          <div>
+            <label class="posLoginEntrada">Usuario</label>
+            <md-icon class="name" md-svg-src="/PFG/oauth2.0/app/image/identidad.svg"></md-icon>
+            <input ng-model="registro.usuario" name="usuario" type="text" required="required" md-select-on-focus="md-select-on-focus"/>
+          </div>
+          <div>
+            <div ng-messages="registroForm.usuario.$error" role="alert"> 
+              <div class="my-message" ng-message="required">El campo usuario no puede estar vacio</div>
+            </div>
+          </div>
+          <div ng-if="usuarioExiste" role="alert">
+            <div class="my-message"> <span class="tamError">El usuario existe</span></div>
+          </div>
+        </md-input-container>
+      </div>
+      <div class="contenedorRegistro md-no-momentum">
+        <md-input-container class="md-icon-left-registro md-icon-float md-block">
+          <div>
+            <label class="posLoginEntrada">Contraseña</label>
+            <md-icon class="contrasenia" md-svg-src="/PFG/oauth2.0/app/image/contrasenia.svg"></md-icon>
+            <input type="{{inputType1}}" name="contrasenia" ng-model="registro.contrasenia" pattern="[a-zA-Z0-9]{6,15}" required="required" md-select-on-focus="md-select-on-focus"/>
+          </div>
+          <div class="posVisibleContrasenia"><img class="posVisualizarRegistro" src="/PFG/oauth2.0/app/image/noVisible.png" ng-click="hacerVisible1()" ng-if="inputType1=='password' "/><img class="posVisualizarRegistro" src="/PFG/oauth2.0/app/image/visible.png" ng-click="hacerVisible1()" ng-if="inputType1=='text' "/></div>
+          <div>
+            <div ng-messages="registroForm.contrasenia.$error" role="alert"> 
+              <div class="my-message" ng-message="required">El campo contraseña no puede estar vacio</div>
+              <div class="my-message" ng-message="pattern">La cotraseña debe contener lentras en mayuscula y minuscula, numeros y tener de 6 a 15 caracteres.</div>
+            </div>
+          </div>
+        </md-input-container>
+      </div>
+      <div class="contenedorRegistro md-no-momentum">
+        <md-input-container class="md-icon-left-registro md-icon-float md-block">
+          <div>
+            <label class="posLoginEntrada">Repite ontraseña</label>
+            <md-icon class="contrasenia" md-svg-src="/PFG/oauth2.0/app/image/contrasenia.svg"></md-icon>
+            <input type="{{inputType2}}" name="contrasenia2" ng-model="registro.contrasenia2" pattern="[a-zA-Z0-9]{6,15}" required="required" md-select-on-focus="md-select-on-focus" ng-change="comprobar(registro.contrasenia, registro.contrasenia2, 'sontrasenia')"/>
+          </div>
+          <div class="posVisibleContrasenia"><img class="posVisualizarRegistro" src="/PFG/oauth2.0/app/image/noVisible.png" ng-click="hacerVisible2()" ng-if="inputType2=='password' "/><img class="posVisualizarRegistro" src="/PFG/oauth2.0/app/image/visible.png" ng-click="hacerVisible2()" ng-if="inputType2=='text' "/></div>
+          <div>
+            <div ng-messages="registroForm.contrasenia2.$error" role="alert" multiple="multiple"> 
+              <div class="my-message" ng-message="required">El campo contraseña no puede estar vacio</div>
+              <div class="my-message" ng-message="pattern">La cotraseña debe contener lentras en mayuscula y minuscula, numeros y tener de 6 a 15 caracteres.</div>
+            </div>
+            <div ng-if="equalCont" role="alert">
+              <div class="my-message"> <span class="tamError">Las contraseñas no coinciden</span></div>
+            </div>
+          </div>
+        </md-input-container>
+      </div>
+      <div class="contenedorRegistro md-no-momentum">
+        <md-input-container class="md-icon-left-registro md-icon-float md-block">
+          <div>
+            <label class="posLoginEntrada">Nombre</label>
+            <md-icon class="name" md-svg-src="/PFG/oauth2.0/app/image/identidad.svg"></md-icon>
+            <input ng-model="registro.nombre" name="nombre" type="text" required="required" md-select-on-focus="md-select-on-focus"/>
+          </div>
+          <div>
+            <div ng-messages="registroForm.nombre.$error" role="alert"> 
+              <div class="my-message" ng-message="required">El campo usuario no puede estar vacio</div>
+            </div>
+          </div>
+        </md-input-container>
+      </div>
+      <div class="contenedorRegistro md-no-momentum">
+        <md-input-container class="md-icon-left-registro md-icon-float md-block">
+          <div>
+            <label class="posLoginEntrada">Apellido</label>
+            <md-icon class="name" md-svg-src="/PFG/oauth2.0/app/image/identidad.svg"></md-icon>
+            <input ng-model="registro.apellidos" name="apellidos" type="text" required="required" md-select-on-focus="md-select-on-focus"/>
+          </div>
+          <div>
+            <div ng-messages="registroForm.apellidos.$error" role="alert"> 
+              <div class="my-message" ng-message="required">El campo usuario no puede estar vacio</div>
+            </div>
+          </div>
+        </md-input-container>
+      </div>
+      <div class="contenedorRegistro md-no-momentum">
+        <md-input-container class="md-icon-left-registro md-icon-float md-block">
+          <div>
+            <label class="posLoginEntrada">Email</label>
+            <md-icon class="name" md-svg-src="/PFG/oauth2.0/app/image/email.svg"></md-icon>
+            <input ng-model="registro.email" name="email" type="email" required="required" md-select-on-focus="md-select-on-focus"/>
+          </div>
+          <div>
+            <div ng-messages="registroForm.email.$error" role="alert"> 
+              <div class="my-message" ng-message="required">El campo usuario no puede estar vacio</div>
+            </div>
+          </div>
+        </md-input-container>
+      </div>
+      <div class="contenedorRegistro md-no-momentum">
+        <md-input-container class="md-icon-left-registro md-icon-float md-block">
+          <div>
+            <label class="posLoginEntrada">Repetir email</label>
+            <md-icon class="name" md-svg-src="/PFG/oauth2.0/app/image/email.svg"></md-icon>
+            <input ng-model="registro.email2" name="email2" type="email" required="required" md-select-on-focus="md-select-on-focus" ng-change="comprobar(registro.email, registro.email2, 'email')"/>
+          </div>
+          <div>
+            <div ng-messages="registroForm.email2.$error" role="alert" multiple="multiple"> 
+              <div class="my-message" ng-message="required">El campo usuario no puede estar vacio</div>
+            </div>
+          </div>
+          <div ng-if="equalEmail" role="alert">
+            <div class="my-message"> <span class="tamError">El email no coincide</span></div>
+          </div>
+        </md-input-container>
+      </div>
+      <div>
+        <input class="botonRegistrar" id="menuBoton" type="submit" value="Registrarse" ng-click="crearRegistro()"/>
+      </div>
+    </form>
+  </div>
+</div>

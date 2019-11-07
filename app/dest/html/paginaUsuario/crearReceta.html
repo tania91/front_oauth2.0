@@ -1,0 +1,105 @@
+
+<div class="saltoContenedor" ng-controller="CrearRecetaCtrl">
+  <div>
+    <div class="errorContent" ng-if="estadoDevolverRecetas == 'ERROR' ">
+      <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+      <div class="mensajeError2">
+        <h2>Se ha producido un error. </h2>
+        <p></p>
+        <h3>Vuelve a entrar en un momento.</h3>
+      </div>
+    </div>
+    <div class="errorContent" ng-if="estadoVerificarRecetas == 'ERROR' ">
+      <div><img class="iconoError2" src="/PFG/oauth2.0/app/image/error.png"/></div>
+      <div class="mensajeError2">
+        <h2>Se ha producido un error. </h2>
+        <p></p>
+        <h3>La reseta no se ha podido guardar correctamente</h3>
+      </div>
+    </div>
+    <div class="warningContent" ng-if="estadoDevolverRecetas == 'WARNING' ">
+      <div><img class="iconoWarning" src="/PFG/oauth2.0/app/image/warning.png"/></div>
+      <div class="mensajeWarning">
+        <h2>Usted no tiene recetas. </h2>
+        <p></p>
+        <h3>Añade alguna pulsando el boton de arriba.</h3>
+      </div>
+    </div>
+  </div>
+  <div ng-if="estadoDevolverRecetas == 'OK' ">
+    <h2>La receta se ha añadido con exito. </h2>
+  </div>
+  <div class="contenedorTitlo tituloRecetaUsuario" ng-if="estadoVerificarRecetas == 'HAYDATOS' ">
+    <h2 id="tituloReceta">{{literales.recetas.aniadeReceta}}</h2>
+  </div>
+  <form name="recetaForm" ng-show="estadoVerificarRecetas == 'HAYDATOS' "> 
+    <md-content class="contenedorDetalle">
+      <md-input-container class="md-block md-input-has-value">
+        <div><img class="imagenCrearReceta cajaImagenCrear" id="recetaImagen" src="/PFG/oauth2.0/app/image/gorroGris.png" rname="imagen" equired="equired" md-select-on-focus="md-select-on-focus"/></div>
+        <div>
+          <input class="inputfile" id="botonCargarImagen" type="file" ng-file-model="fileImagen"/>
+          <label class="botonAniadir" for="botonCargarImagen"><span class="nombreBoton">Seleccionar archivo</span></label>
+        </div>
+        <div ng-messages="recetaForm.imagen.$error" role="alert" multiple="multiple"> 
+          <div class="my-message" ng-message="required">Añade la imagen de la receta</div>
+        </div>
+      </md-input-container>
+      <div class="contenedorDetalleReceta"> 
+        <div>
+          <div>
+            <h2>{{literales.recetas.nombre}}<a class="campoObligatorio">*</a></h2>
+          </div>
+          <md-content class="descripcionContenedor">
+            <md-input-container class="md-block md-input-has-value">
+              <div class="md-resize-wrapper">
+                <textarea class="contenedorNombre" name="nombre" ng-model="receta.nombreReceta" md-maxlength="50" required="required" md-select-on-focus="md-select-on-focus"></textarea>
+              </div>
+              <div ng-messages="recetaForm.nombre.$error" role="alert" multiple="multiple"> 
+                <div class="my-message" ng-message="required">El nombre de la receta no puede ser vacio</div>
+                <div class="my-message" ng-message="md-maxlength"> La descripcion no puede tenel más de 20 caracteres</div>
+              </div>
+            </md-input-container>
+          </md-content>
+          <p></p>
+        </div>
+        <div>
+          <div>
+            <h2>{{literales.recetas.ingredientes}} <a class="campoObligatorio">*</a></h2>
+          </div>
+          <md-content class="descripcionContenedor">
+            <md-input-container class="md-block md-input-has-value">
+              <div class="md-resize-wrapper">
+                <textarea class="contenedorIngredientes" name="ingredientes" ng-model="receta.ingredientesReceta" md-maxlength="500" required="required" md-select-on-focus="md-select-on-focus"></textarea>
+              </div>
+              <div ng-messages="recetaForm.ingredientes.$error" role="alert" multiple="multiple"> 
+                <div class="my-message" ng-message="required">La descripcion de la receta no puede ser vacia </div>
+                <div class="my-message" ng-message="md-maxlength"> La descripcion no puede tenel más de 500 caracteres</div>
+              </div>
+            </md-input-container>
+          </md-content>
+          <p></p>
+        </div>
+        <div>
+          <div>
+            <h2>{{literales.recetas.descripcion}} <a class="campoObligatorio">*</a></h2>
+          </div>
+          <md-content class="descripcionContenedor">
+            <md-input-container class="md-block md-input-has-value">
+              <div class="md-resize-wrapper">
+                <textarea class="contenedorDescripcion" name="descripcion" ng-model="receta.descripcionReceta" md-maxlength="700" required="required" md-select-on-focus="md-select-on-focus"></textarea>
+              </div>
+              <div ng-messages="recetaForm.descripcion.$error" role="alert" multiple="multiple"> 
+                <div class="my-message" ng-message="required">La descripcion de la receta no puede ser vacia </div>
+                <div class="my-message" ng-message="md-maxlength"> La descripcion no puede tenel más de 500 caracteres</div>
+              </div>
+            </md-input-container>
+          </md-content>
+        </div>
+      </div>
+      <div class="botonDetalleReceta"> 
+        <input class="botonRecoger" type="submit" value="Guardar" ng-click="recogerImagen()"/>
+        <input class="botonRecoger posBotonVolver" type="button" value="Volver" ng-click="volver()"/>
+      </div>
+    </md-content>
+  </form>
+</div>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html class="bloque" lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="../css/app.css" rel="stylesheet">
+    <link href="../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../node_modules/angular-material/angular-material.css">
+    <script src="../scripts/app.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-route.min.js"></script>
+    <script src="../../node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+    <script src="../../node_modules/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+    <script src="../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
+    <script src="../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+    <script src="../../node_modules/angular-messages/angular-messages.js"></script>
+    <script src="../../node_modules/angular-animate/angular-animate.js"></script>
+    <script src="../../node_modules/angular-aria/angular-aria.js"></script>
+    <script src="../../node_modules/angular-material/angular-material.js"></script>
+    <script src="../../node_modules/angularjs-file-model/fileModel.min.js"></script>
+    <script type="text/javascript" src="angular-swx-session-storage.min.js"></script>
+    <base href="http://www.cocinarusa.es:8081/PFG/oauth2.0/app/dest/html/">
+  </head>
+  <body class="bloque" ng-app="app">
+    <header id="fondoCabecera">
+      <div id="cabecera">
+        <div ng-controller="HomeCtrl">
+          <div><img id="imagenTitulo" src="/PFG/oauth2.0/app/image/gorro.png" ng-click="recargar()"></div>
+          <div id="texto">
+            <table id="tabla">
+              <tr>
+                <td id="titulo">
+                  <p>
+                    <h1 id="titulo1">{{literales.cabecera.titulo1}}</h1>
+                  </p>
+                  <p>
+                    <h3 id="subtitulo">{{literales.cabecera.titulo2}}</h3>
+                  </p>
+                </td>
+                <td>
+                  <table>
+                    <tr id="buscador">
+                      <td>
+                        <input id="estiloBuscador" type="text" name="buscador.text" model="buscador">
+                        <input class="estiloBoton" type="button" value="Buscar" name="buscador" ng-click="">
+                        <input id="menuBotonLogin" ng-if="estadoVerificar == '' || estadoVerificar=='ERROR'" type="button" value="LogIn" name="buscador" ng-click="login()">
+                        <input id="menuBotonLogin" ng-if="estadoVerificar=='OK'" type="button" value="LogOut" name="buscador" ng-click="logout()">
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="contenedor" ng-view=""></div>
+    <footer class="separador">
+      <div class="separador2"></div>
+      <div class="separador"></div>
+      <div class="estiloPie"><span>Autor: Tetyana Hrytsay</span></div>
+    </footer>
+  </body>
+</html>
