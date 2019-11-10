@@ -1,7 +1,7 @@
 //-error
 
 
-
+//-Errores receta
 div.errorContent(ng-if="estadoDevolverRecetas == 'ERROR' ")
 	div
 		img.iconoError2(src="/PFG/Front/app/image/error.png")
@@ -18,7 +18,22 @@ div.errorContent(ng-if="estadoVerificarRecetas == 'ERROR' ")
 		p
 		h3 La reseta no se ha podido guardar correctamente
 
+//- Errores admin
+div.errorContent(ng-if="eliminar == 'ERROR' ")
+	div
+		img.iconoError2(src="/PFG/Front/app/image/error.png")
+	div.mensajeError2
+		h2 Se ha producido un error. 
+		p
+		h3 No es posible eliminar usuario.
 
+div.errorContent(ng-if="estadoUsuariosAdmin == 'ERROR' || estadoUsuariosTerceros == 'ERROR' ")
+	div
+		img.iconoError2(src="/PFG/Front/app/image/error.png")
+	div.mensajeError2
+		h2 Se ha producido un error. 
+		p
+		h3 No es posible recuperar los usuarios.
 
 
 
@@ -34,3 +49,11 @@ div.warningContent(ng-if="estadoDevolverRecetas == 'WARNING' ")
 		h2 Usted no tiene recetas. 
 		p
 		h3 Añade alguna pulsando el boton de arriba.
+
+div.warningContent(ng-if="estadoUsuariosTerceros == 'WARNING'  && estadoUsuariosAdmin == 'WARNING' ")
+	div
+		img.iconoWarning(src="/PFG/oauth2.0/app/image/warning.png")
+	div.mensajeWarning
+		h2 Lo sentimos
+		p
+		h3 No hay ningun usuario registrado

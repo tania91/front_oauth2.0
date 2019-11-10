@@ -7,10 +7,6 @@ angular.module('app' )
 			$scope.literales = [];
 			$scope.estadoCrearReceta = "";
 			$scope.validarUsuario = "";
-			$scope.estadoFORBIDDEN = "403";
-			$scope.estadoUNAUTHORIZED = "401";
-			$scope.estadoOK = "200";
-			$scope.errorTiempo = "Usted no esta autorizado. Tiene que mandar su refresh token";
 			
 			$rootScope.estadoVerificarRecetas = "";
 			
@@ -66,10 +62,7 @@ angular.module('app' )
 								$rootScope.estadoEntrar = "";
 								$rootScope.estadoDevolverRecetas = "";
 								$rootScope.estadoVerificarRecetas = "";
-								sessionStorage.token = "0";
-								sessionStorage.refreshToken = "0";
-								sessionStorage.succes = "0";
-								sessionStorage.code = "0";
+								sessionStorage.clear();
 								$rootScope.estadoVerificar = "ERROR"
 								$scope.estadoCrear = "";
 								$location.url('/cocinaRusa/login');	
@@ -80,7 +73,7 @@ angular.module('app' )
 									.then(function(respuesta){
 										sessionStorage.token = respuesta.headers("Authorization");
 										sessionStorage.refreshToken = respuesta.headers("Refreshtoken");
-										inicioUsuario();
+										$scope.recogerImagen();
 									}, function(error){
 										if(error.data.message.indexOf("JWT expired") != 1){
 											//Si es por tiempo
@@ -89,10 +82,7 @@ angular.module('app' )
 											//Si es por otra causa devuelve que usuario npo esta autorizado
 											$rootScope.mensajeErrorAutorizacion = "Ustes no esta autorizado";
 										}
-										sessionStorage.token = "0";
-										sessionStorage.refreshToken = "0";
-										sessionStorage.succes = "0";
-										sessionStorage.code = "0";
+										sessionStorage.clear();
 										$rootScope.estadoDevolverRecetas = "ERROR";
 										$rootScope.estadoVerificar = "ERROR"
 										$rootScope.show = true;

@@ -1,6 +1,6 @@
 angular.module('app' )
-	.controller('PgnPrincipalCtrl',['$scope', '$rootScope', 'RecetasCtrl', 'LiteralesCtrl', 'PgnPrincipalService', '$location',
-		function($scope, $rootScope, RecetasCtrl, LiteralesCtrl,PgnPrincipalService, $location){
+	.controller('PgnPrincipalCtrl',['$scope', '$rootScope', 'LiteralesCtrl', 'PgnPrincipalService', '$location',
+		function($scope, $rootScope, LiteralesCtrl,PgnPrincipalService, $location){
 
 			
 			$scope.listadoRecetas = [];
@@ -28,18 +28,35 @@ angular.module('app' )
 
 					PgnPrincipalService.recuperarTokenConCode(urlCode)
 						.then(function(respuesta){
+							$rootScope.estadoEntrar = "HAYDATOS";
+							$rootScope.estadoVerificar = "OK";
 							sessionStorage.token = respuesta.headers("Authorization");
 							sessionStorage.refreshToken = respuesta.headers("Refreshtoken");
-							sessionStorage.succes = "1";
-							$location.url('/cocinaRusa/inicio');	
+							guardarDatosUsuario(sessionStorage.token);
+							sessionStorage.succes = "OK";
+							if(sessionStorage.role == "USER"){
+								$location.url('/cocinaRusa/inicio');
+							}else if(sessionStorage.role == "ADMIN"){
+								$location.url('/cocinaRusa/admin/inicio');
+							}else{
+								sessionStorage.clear();
+								$rootScope.estadoVerificar = "ERROR"
+								$rootScope.estadoEntrar = "ERRORROL";
+								$rootScope.show = true;
+								$location.url('/cocinaRusa/login');
+							}
 						},function(error){
-							sessionStorage.token = "0";
-							sessionStorage.refreshToken = "0";
-							sessionStorage.succes = "0";
-							sessionStorage.code = "0";
+							sessionStorage.removeItem("succes")
+							
+							if(error.data.message == $scope.literales.errores.credenciales){
+								$rootScope.estadoEntrar = "ERRORCREDENCIALES";
+							}else{
+								$rootScope.estadoEntrar = "ERROR";
+							}
+							$rootScope.estadoVerificar = "OK";
 							$scope.estado = "ERROR";
 						});
-				}else if(sessionStorage.token == "0"){
+				}else if(sessionStorage.token == undefined){
 					buscarReceta();
 				}else {
 					sessionStorage.code = urlCode;
@@ -112,6 +129,15 @@ angular.module('app' )
 		      $scope.setPage = function(index) {
 		        $scope.currentPage = index - 1;
 		      };
+
+		      function guardarDatosUsuario(cadena){
+				var aux = cadena.substring(cadena.indexOf(".")+1);
+				var datosBase64 = aux.substring(0,aux.indexOf("."));
+
+				sessionStorage.sub = angular.fromJson(atob(datosBase64)).sub;
+				sessionStorage.id = angular.fromJson(atob(datosBase64)).id;
+				sessionStorage.role = angular.fromJson(atob(datosBase64)).roles[0];
+			}
 
 			inicio();
 	}])

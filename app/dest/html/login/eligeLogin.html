@@ -2,6 +2,7 @@
 <div class="posEntrada" ng-controller="LoginCtrl">
   <div class="posError" ng-if="estadoEntrar == 'ERROR' || estadoCrear == 'ERROR' "><span>* Se ha producido un error</span></div>
   <div class="posError" ng-if="estadoEntrar == 'ERRORCREDENCIALES'"><span>* El Campo usuario o contraseña no es correcto</span></div>
+  <div class="posError" ng-if="estadoEntrar == 'ERRORROL'"><span>* Usted no esta autorizado. </span></div>
   <div class="posTituloCaja">
     <h1>{{literales.login.entrar.modoEntrar}}</h1>
   </div>

@@ -1,0 +1,91 @@
+
+<div ng-controller="AdminCtrl">
+  <div class="errorContent" ng-if="estadoDevolverRecetas == 'ERROR' ">
+    <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+    <div class="mensajeError2">
+      <h2>Se ha producido un error. </h2>
+      <p></p>
+      <h3>Vuelve a entrar en un momento.</h3>
+    </div>
+  </div>
+  <div class="errorContent" ng-if="estadoVerificarRecetas == 'ERROR' ">
+    <div><img class="iconoError2" src="/PFG/oauth2.0/app/image/error.png"/></div>
+    <div class="mensajeError2">
+      <h2>Se ha producido un error. </h2>
+      <p></p>
+      <h3>La reseta no se ha podido guardar correctamente</h3>
+    </div>
+  </div>
+  <div class="errorContent" ng-if="eliminar == 'ERROR' ">
+    <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+    <div class="mensajeError2">
+      <h2>Se ha producido un error. </h2>
+      <p></p>
+      <h3>No es posible eliminar usuario.</h3>
+    </div>
+  </div>
+  <div class="errorContent" ng-if="estadoUsuariosAdmin == 'ERROR' || estadoUsuariosTerceros == 'ERROR' ">
+    <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+    <div class="mensajeError2">
+      <h2>Se ha producido un error. </h2>
+      <p></p>
+      <h3>No es posible recuperar los usuarios.</h3>
+    </div>
+  </div>
+  <div class="warningContent" ng-if="estadoDevolverRecetas == 'WARNING' ">
+    <div><img class="iconoWarning" src="/PFG/oauth2.0/app/image/warning.png"/></div>
+    <div class="mensajeWarning">
+      <h2>Usted no tiene recetas. </h2>
+      <p></p>
+      <h3>Añade alguna pulsando el boton de arriba.</h3>
+    </div>
+  </div>
+  <div class="warningContent" ng-if="estadoUsuariosTerceros == 'WARNING'  &amp;&amp; estadoUsuariosAdmin == 'WARNING' ">
+    <div><img class="iconoWarning" src="/PFG/oauth2.0/app/image/warning.png"/></div>
+    <div class="mensajeWarning">
+      <h2>Lo sentimos</h2>
+      <p></p>
+      <h3>No hay ningun usuario registrado</h3>
+    </div>
+  </div>
+  <h3 class="tituloAdmin" ng-if="listadoUsuariosAdmin.length &gt; 0">Usuario de la aplicacion</h3>
+  <table class="tablaAdmin" ng-if="listadoUsuariosAdmin.length &gt; 0">
+    <tr class="headerAdmin">
+      <th class="cabeceraTabla paddingNombre">NOMBRE</th>
+      <th class="cabeceraTabla padding">USERNAME</th>
+      <th class="cabeceraTabla paddingEmail">EMAIL</th>
+      <th class="cabeceraTabla padding">Nº RECETA</th>
+      <th class="cabeceraTabla paddingBoton"></th>
+    </tr>
+    <tr class="bodyAdmin" ng-repeat="admin in listadoUsuariosAdmin track by admin.id">
+      <td class="celda"><span class="usuarioAdmin">{{admin.nombre}} {{admin.apellidos}}</span></td>
+      <td class="celda"><span class="usuarioAdmin">{{admin.username}}</span></td>
+      <td class="celda"><span class="usuarioAdmin">{{admin.email}}</span></td>
+      <td class="celda" ng-if="admin.numRecetas != undefined"><span class="usuarioAdmin">{{admin.numRecetas}}</span></td>
+      <td class="celda" ng-if="admin.numRecetas == undefined"><span class="usuarioAdmin">0</span></td>
+      <td class="celda"> 
+        <input class="botonTablaAdmin" type="submit" value="Eliminar" ng-click="eliminarUsuario(admin.id)"/>
+      </td>
+    </tr>
+  </table>
+  <h3 class="tituloAdmin" ng-if="listadoUsuariosTerceros.length &gt; 0">Usuarios de un tercero</h3>
+  <table class="tablaAdmin" ng-if="listadoUsuariosTerceros.length &gt; 0">
+    <tr class="headerAdmin">
+      <th class="cabeceraTabla paddingNombre">NOMBRE</th>
+      <th class="cabeceraTabla padding">USERNAME</th>
+      <th class="cabeceraTabla paddingEmail">EMAIL</th>
+      <th class="cabeceraTabla padding">Nº RECETA</th>
+      <th class="cabeceraTabla paddingBoton"></th>
+    </tr>
+    <tr class="bodyAdmin" ng-repeat="tercero in listadoUsuariosTerceros track by tercero.id">
+      <td class="celda"><span class="usuarioAdmin">{{tercero.nombre}} {{tercero.apellidos}}</span></td>
+      <td class="celda"><span class="usuarioAdmin">{{tercero.username}}</span></td>
+      <td class="celda"><span class="usuarioAdmin">{{tercero.email}}</span></td>
+      <td class="celda" ng-if="tercero.numRecetas != undefined"><span class="usuarioAdmin">{{tercero.numRecetas}}</span></td>
+      <td class="celda" ng-if="tercero.numRecetas == undefined"><span class="usuarioAdmin">0</span></td>
+      <td class="celda"> 
+        <input class="botonTablaAdmin" type="submit" value="Eliminar" ng-click="eliminarUsuarioTercero(tercero.id)"/>
+      </td>
+    </tr>
+  </table>
+</div>

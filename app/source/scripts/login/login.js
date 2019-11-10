@@ -1,6 +1,6 @@
 angular.module('app')
-	.controller('LoginCtrl',['$scope', 'RecetasCtrl', 'LiteralesCtrl', '$rootScope', '$window', 'ServicioService', '$http', '$location', '$uibModal',
-		function($scope, RecetasCtrl, LiteralesCtrl, $rootScope, $window, ServicioService, $http, $location, $uibModal){
+	.controller('LoginCtrl',['$scope', 'LiteralesCtrl', '$rootScope', '$window', 'ServicioService', '$http', '$location', '$uibModal',
+		function($scope, LiteralesCtrl, $rootScope, $window, ServicioService, $http, $location, $uibModal){
 
 			$scope.inputType1 = 'password';
 			$scope.inputType2 = 'password';
@@ -21,6 +21,12 @@ angular.module('app')
 			$scope.registro.usuario="";
 			$scope.registro.contrasenia="";
 			$scope.registro.email="";
+
+			if(sessionStorage.error == "ERRORROL"){
+				$rootScope.estadoEntrar = sessionStorage.error;
+			}else{
+				$rootScope.estadoEntrar = "";
+			}
 			
 
 			$rootScope.mensajeError = "";
@@ -35,9 +41,7 @@ angular.module('app')
 					$scope.mostrarFormulario = false;
 					$scope.registro.usuario = "";
 				}
-				if($rootScope.estadoVerificar == 'ERROR' && $rootScope.show){
-					mostrarModal();
-				}
+				
 			}
 
 			$scope.loginConSSO = function(){
@@ -65,13 +69,25 @@ angular.module('app')
 							$rootScope.estadoVerificar = "OK";
 							sessionStorage.token = respuesta.headers("Authorization");
 							sessionStorage.refreshToken = respuesta.headers("Refreshtoken");
-							sessionStorage.succes = "1";
-							$location.url('/cocinaRusa/inicio');
+							guardarDatosUsuario(sessionStorage.token);
+							sessionStorage.succes = "OK";
+							if(sessionStorage.role == "USER"){
+								$location.url('/cocinaRusa/inicio');
+							}else if(sessionStorage.role == "ADMIN"){
+								$location.url('/cocinaRusa/admin/inicio');
+							}else{
+								sessionStorage.clear();
+								$rootScope.estadoVerificar = "ERROR"
+								$rootScope.estadoEntrar = "ERRORROL";
+								$rootScope.show = true;
+								$location.url('/cocinaRusa/login');
+							}
+							
 						}
 						
 					})
 					.catch(function(error){
-						sessionStorage.succes = "0";
+						sessionStorage.removeItem("succes")
 						
 						if(error.data.message == $scope.literales.errores.credenciales){
 							$rootScope.estadoEntrar = "ERRORCREDENCIALES";
@@ -115,10 +131,10 @@ angular.module('app')
 									password:btoa($scope.registro.contrasenia),
 									email:$scope.registro.email
 								};
-
+								$scope.estadoCrear = "CARGANDO";
 								ServicioService.crearUsuario(model)
 									.then(function(respuesta){
-										$scope.estadoCrear = "CARGANDO";
+										$scope.estadoCrear = "OK";
 										$scope.estadoEntrar = "";
 										sessionStorage.nombre = respuesta.data.username;
 										$rootScope.usuarioRegistrado = true;
@@ -196,6 +212,15 @@ angular.module('app')
 				return $scope.mostrarFormulario = !$scope.mostrarFormulario;
 				
 				
+			}
+
+			function guardarDatosUsuario(cadena){
+				var aux = cadena.substring(cadena.indexOf(".")+1);
+				var datosBase64 = aux.substring(0,aux.indexOf("."));
+
+				sessionStorage.sub = angular.fromJson(atob(datosBase64)).sub;
+				sessionStorage.id = angular.fromJson(atob(datosBase64)).id;
+				sessionStorage.role = angular.fromJson(atob(datosBase64)).roles[0];
 			}
 
 			inicioLogin();

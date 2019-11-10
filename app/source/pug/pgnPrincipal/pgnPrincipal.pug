@@ -27,30 +27,3 @@ div.contenido(ng-controller = 'PgnPrincipalCtrl')
 			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage == page.no - 1' ng-click='setPage(page.no)' ng-repeat='page in pages') {{page.no}}
 			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage >= listadoRecetas.length/pageSize - 1' , ng-click='currentPage = currentPage + 1')
 		
-
-			
-		//- tr
-		//- 	div
-
-		//- 		input(type="file" ng-file-model="fileImagen" )
-				
-		//- 		img(id="recetaImagen")
-		//- 	div 
-				
-		//- 		div
-		//- 			div
-		//- 				span {{}} Nombre receta
-		//- 				a.campoObligatorio *
-		//- 			div
-		//- 				input.textoLogin(type="text"  ng-model="receta.nombreReceta" required )
-		//- 			p
-		//- 		div
-		//- 			div
-		//- 				span {{}} Descripcion receta 
-		//- 				a.campoObligatorio *
-		//- 			div
-		//- 				input.textoLogin(type="text"  ng-model="receta.descripcionReceta" required )
-		//- 			p
-		//- 	div 
-		//- 		input(type="submit" value="Recoger" ng-click="recogerImagen()")
-		

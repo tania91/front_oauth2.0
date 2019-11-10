@@ -1,0 +1,50 @@
+div(ng-controller = 'AdminCtrl')
+
+	
+	include ../include/errores.pug
+
+
+	h3.tituloAdmin(ng-if="listadoUsuariosAdmin.length > 0") Usuario de la aplicacion
+	table.tablaAdmin(ng-if="listadoUsuariosAdmin.length > 0")
+		tr.headerAdmin
+			th.cabeceraTabla.paddingNombre NOMBRE
+			th.cabeceraTabla.padding USERNAME
+			th.cabeceraTabla.paddingEmail EMAIL
+			th.cabeceraTabla.padding Nº RECETA
+			th.cabeceraTabla.paddingBoton
+
+		tr.bodyAdmin(ng-repeat="admin in listadoUsuariosAdmin track by admin.id")
+			td.celda
+				span.usuarioAdmin {{admin.nombre}} {{admin.apellidos}}
+			td.celda
+				span.usuarioAdmin {{admin.username}}
+			td.celda
+				span.usuarioAdmin {{admin.email}}
+			td.celda(ng-if="admin.numRecetas != undefined")
+				span.usuarioAdmin {{admin.numRecetas}}
+			td.celda(ng-if="admin.numRecetas == undefined")
+				span.usuarioAdmin 0
+			td.celda 
+				input.botonTablaAdmin(type="submit" value="Eliminar" ng-click="eliminarUsuario(admin.id)")
+	h3.tituloAdmin(ng-if="listadoUsuariosTerceros.length > 0") Usuarios de un tercero
+	table.tablaAdmin(ng-if="listadoUsuariosTerceros.length > 0")
+		tr.headerAdmin
+			th.cabeceraTabla.paddingNombre NOMBRE
+			th.cabeceraTabla.padding USERNAME
+			th.cabeceraTabla.paddingEmail EMAIL
+			th.cabeceraTabla.padding Nº RECETA
+			th.cabeceraTabla.paddingBoton
+
+		tr.bodyAdmin(ng-repeat="tercero in listadoUsuariosTerceros track by tercero.id")
+			td.celda
+				span.usuarioAdmin {{tercero.nombre}} {{tercero.apellidos}}
+			td.celda
+				span.usuarioAdmin {{tercero.username}}
+			td.celda
+				span.usuarioAdmin {{tercero.email}}
+			td.celda(ng-if="tercero.numRecetas != undefined")
+				span.usuarioAdmin {{tercero.numRecetas}}
+			td.celda(ng-if="tercero.numRecetas == undefined")
+				span.usuarioAdmin 0
+			td.celda 
+				input.botonTablaAdmin(type="submit" value="Eliminar" ng-click="eliminarUsuarioTercero(tercero.id)")

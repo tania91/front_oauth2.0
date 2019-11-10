@@ -3,10 +3,7 @@ angular.module('app' )
 		function($scope,  LiteralesCtrl, $location, $rootScope, $window, ServicioService ){
 			$rootScope.pasoActual = "INICIO";
 			$rootScope.volverInicio = false;
-			sessionStorage.usuarioRegistrado = null;
-			sessionStorage.token = "0";
-			sessionStorage.refreshToken = "0";
-			sessionStorage.code = "0";
+			sessionStorage.clear();
 			$rootScope.estadoVerificar = "";
 
 			function inicioOperativa(){
@@ -21,8 +18,14 @@ angular.module('app' )
 				if($rootScope.estadoVerificar == '' || $rootScope.estadoVerificar=='ERROR'){
 					$location.url('/home');
 				}else if($rootScope.estadoVerificar == 'OK' ){
+					if(sessionStorage.role == "USER"){
+						$location.url('/cocinaRusa/inicio');
+					}else if(sessionStorage.role == "ADMIN"){
+						$location.url('/cocinaRusa/admin/inicio');
+					}else{
+						$location.url('/home');
+					}
 					
-					$location.url('/cocinaRusa/inicio');
 				}
 				
 			}; 
@@ -38,10 +41,7 @@ angular.module('app' )
 				$rootScope.estadoEntrar = "";
 				$rootScope.estadoDevolverRecetas = "";
 				$rootScope.estadoVerificarRecetas = "";
-				sessionStorage.token = "0";
-				sessionStorage.refreshToken = "0";
-				sessionStorage.code = "0";
-				sessionStorage.tipoLogin = "0";
+				sessionStorage.clear();
 				$location.url('/home');	
 			}
 

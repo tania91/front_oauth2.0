@@ -4,6 +4,9 @@ div.posEntrada(ng-controller = "LoginCtrl" )
 		span * Se ha producido un error
 	div.posError(ng-if="estadoEntrar == 'ERRORCREDENCIALES'")
 		span * El Campo usuario o contraseña no es correcto
+	div.posError(ng-if="estadoEntrar == 'ERRORROL'")
+		span * Usted no esta autorizado. 
+		
 
 
 	div.posTituloCaja

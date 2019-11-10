@@ -50,7 +50,7 @@ angular.module('app' )
 
 		this.refreshToken = function(token, code){
 			var url = "";
-			if(code != "0" && code != "undefined"){
+			if(code != undefined){
 				url = "https://localhost:8446/oauth/tokens";
 			}else{
 				url = "https://localhost:8445/oauth/tokens"
@@ -74,7 +74,7 @@ angular.module('app' )
 		this.buscarUsuarioConToken = function(token, code, tipoConeccion){
 
 			var url = "";
-			if(code != "0" && code != "undefined" || tipoConeccion == "CONSSO"){
+			if(code != undefined || tipoConeccion == "CONSSO"){
 				url = "https://localhost:8446/users/user";
 			}else{
 				url = "https://localhost:8445/users/user"

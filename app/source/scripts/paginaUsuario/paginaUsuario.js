@@ -1,14 +1,12 @@
 angular.module('app' )
-	.controller('UsuarioCtrl',['$scope', 'RecetasCtrl', 'LiteralesCtrl', '$rootScope', '$window', '$routeParams', 'PgnPrincipalService', 'PgnUsuarioService', '$location', '$q',
-		function($scope, RecetasCtrl, LiteralesCtrl, $rootScope, $window, $routeParams, PgnPrincipalService, PgnUsuarioService, $location, $q){
+	.controller('UsuarioCtrl',['$scope',  'LiteralesCtrl', '$rootScope', '$window', '$routeParams', 'PgnPrincipalService', 'PgnUsuarioService', '$location', '$q',
+		function($scope,  LiteralesCtrl, $rootScope, $window, $routeParams, PgnPrincipalService, PgnUsuarioService, $location, $q){
 
 			
 			$scope.listadoRecetas = [];
 			$scope.literales = [];
 			
-			$scope.estadoUNAUTHORIZED = "401";
-			$scope.estadoFORBIDDEN = "403";
-			$scope.errorTiempo = "Usted no esta autorizado. Tiene que mandar su refresh token";
+			
 			$scope.miReceta = false;
 			$scope.currentPage = 0;
 	      	$scope.pageSize = 6;
@@ -30,7 +28,7 @@ angular.module('app' )
 			function inicioUsuario(){
 				$window.scrollTo(0, 0);
 				$scope.literales = LiteralesCtrl.getLiterales();
-				if(sessionStorage.succes == "1"){
+				if(sessionStorage.succes == "OK"){
 					$rootScope.datosUsuario = true;
 				}
 				
@@ -49,12 +47,8 @@ angular.module('app' )
 							$scope.listadoRecetas[i].posicion = i+1;
 						}
 
-						PgnPrincipalService.buscarUsuarioConToken(sessionStorage.token, sessionStorage.code, sessionStorage.tipoLogin)
-							.then(function(respuesta){
-								$scope.usuario = respuesta.data.username;
-							}, function(error){
-								tratarError(error);
-							})
+						$scope.usuario = sessionStorage.sub;  
+						
 					}, function(error){
 						tratarError(error);
 					})
@@ -71,11 +65,9 @@ angular.module('app' )
 					$rootScope.estadoEntrar = "";
 					$rootScope.estadoDevolverRecetas = "";
 					$rootScope.estadoVerificarRecetas = "";
-					sessionStorage.token = "0";
-					sessionStorage.refreshToken = "0";
-					sessionStorage.succes = "0";
-					sessionStorage.code = "0";
-					$rootScope.estadoVerificar = "ERROR";
+					sessionStorage.clear()
+					//$rootScope.estadoVerificar = "ERROR";
+					sessionStorage.error = "ERRORROL";
 					$location.url('/cocinaRusa/login');	
 				}else if(error.data.status == parseInt($scope.literales.status.unauthorized, 10)){
 					//Si es error 401
@@ -84,6 +76,7 @@ angular.module('app' )
 						.then(function(respuesta){
 							sessionStorage.token = respuesta.headers("Authorization");
 							sessionStorage.refreshToken = respuesta.headers("Refreshtoken");
+							guardarDatosUsuario(sessionStorage.token);
 							inicioUsuario();
 						}, function(error){
 							if(error.data.message.indexOf("JWT expired") != 1){
@@ -93,12 +86,11 @@ angular.module('app' )
 								//Si es por otra causa devuelve que usuario npo esta autorizado
 								$rootScope.mensajeErrorAutorizacion = "Ustes no esta autorizado";
 							}
-							sessionStorage.token = "0";
-							sessionStorage.refreshToken = "0";
-							sessionStorage.succes = "0";
-							sessionStorage.code = "0";
+							sessionStorage.clear();
+							$rootScope.estadoEntrar = "ERRORROL"
 							$rootScope.estadoDevolverRecetas = "ERROR";
-							$rootScope.estadoVerificar = "ERROR";
+							//$rootScope.estadoVerificar = "ERROR";
+							sessionStorage.error = "ERRORROL";
 							$rootScope.show = true;
 							$location.url('/cocinaRusa/login');
 						});
@@ -163,7 +155,16 @@ angular.module('app' )
 
 		      $scope.setPage = function(index) {
 		        $scope.currentPage = index - 1;
-		      };
+		    };
+
+		    function guardarDatosUsuario(cadena){
+				var aux = cadena.substring(cadena.indexOf(".")+1);
+				var datosBase64 = aux.substring(0,aux.indexOf("."));
+
+				sessionStorage.sub = angular.fromJson(atob(datosBase64)).sub;
+				sessionStorage.id = angular.fromJson(atob(datosBase64)).id;
+				sessionStorage.role = angular.fromJson(atob(datosBase64)).roles[0];
+			}
 
 			inicioUsuario();
 

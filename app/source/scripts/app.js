@@ -21,6 +21,9 @@ angular.module('app',['ngRoute',
             .when('/cocinaRusa/inicio', {
                 templateUrl: '/PFG/oauth2.0/app/dest/html/paginaUsuario/paginaUsuario.html'
             })
+            .when('/cocinaRusa/admin/inicio', {
+                templateUrl: '/PFG/oauth2.0/app/dest/html/paginaAdmin/paginaAdmin.html'
+            })
             .when('/cocinaRusa/:idReceta/:nombreReceta', {
                 templateUrl: '/PFG/oauth2.0/app/dest/html/pgnPrincipal/detalle/detalleReceta.html'
             })
