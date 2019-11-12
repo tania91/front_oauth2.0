@@ -37,7 +37,7 @@ angular.module('app',['ngRoute',
                 templateUrl: '/PFG/oauth2.0/app/dest/html/paginaUsuario/recetaUsuario.html'
             })
             .otherwise({redirectTo: '/'});
-        $locationProvider.html5Mode(true);
+       // $locationProvider.html5Mode(true);
 
            
 });

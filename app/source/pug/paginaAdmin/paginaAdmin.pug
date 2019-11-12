@@ -3,7 +3,8 @@ div(ng-controller = 'AdminCtrl')
 	
 	include ../include/errores.pug
 
-
+	div.loading(ng-if="estadoDevolverRecetas =='CARGANDO'") 
+		img(style="display:block; margin:0 auto;" src="/PFG/oauth2.0/app/image/loading.gif")
 	h3.tituloAdmin(ng-if="listadoUsuariosAdmin.length > 0") Usuario de la aplicacion
 	table.tablaAdmin(ng-if="listadoUsuariosAdmin.length > 0")
 		tr.headerAdmin
@@ -13,7 +14,7 @@ div(ng-controller = 'AdminCtrl')
 			th.cabeceraTabla.padding Nº RECETA
 			th.cabeceraTabla.paddingBoton
 
-		tr.bodyAdmin(ng-repeat="admin in listadoUsuariosAdmin track by admin.id")
+		tr(ng-repeat="admin in listadoUsuariosAdmin track by admin.id")
 			td.celda
 				span.usuarioAdmin {{admin.nombre}} {{admin.apellidos}}
 			td.celda
@@ -25,7 +26,9 @@ div(ng-controller = 'AdminCtrl')
 			td.celda(ng-if="admin.numRecetas == undefined")
 				span.usuarioAdmin 0
 			td.celda 
-				input.botonTablaAdmin(type="submit" value="Eliminar" ng-click="eliminarUsuario(admin.id)")
+				input.botonTablaAdmin(ng-if="estadoEliminar !='CARGANDO'" type="submit" value="Eliminar" ng-click="eliminarUsuario(admin.id)")
+				img(ng-if="estadoEliminar =='CARGANDO'" style="display:block; margin:0 auto;" src="/PFG/oauth2.0/app/image/miniLoading.gif")
+
 	h3.tituloAdmin(ng-if="listadoUsuariosTerceros.length > 0") Usuarios de un tercero
 	table.tablaAdmin(ng-if="listadoUsuariosTerceros.length > 0")
 		tr.headerAdmin
@@ -33,9 +36,8 @@ div(ng-controller = 'AdminCtrl')
 			th.cabeceraTabla.padding USERNAME
 			th.cabeceraTabla.paddingEmail EMAIL
 			th.cabeceraTabla.padding Nº RECETA
-			th.cabeceraTabla.paddingBoton
 
-		tr.bodyAdmin(ng-repeat="tercero in listadoUsuariosTerceros track by tercero.id")
+		tr(ng-repeat="tercero in listadoUsuariosTerceros track by tercero.id")
 			td.celda
 				span.usuarioAdmin {{tercero.nombre}} {{tercero.apellidos}}
 			td.celda
@@ -46,5 +48,4 @@ div(ng-controller = 'AdminCtrl')
 				span.usuarioAdmin {{tercero.numRecetas}}
 			td.celda(ng-if="tercero.numRecetas == undefined")
 				span.usuarioAdmin 0
-			td.celda 
-				input.botonTablaAdmin(type="submit" value="Eliminar" ng-click="eliminarUsuarioTercero(tercero.id)")
+			

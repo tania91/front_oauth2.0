@@ -1,11 +1,12 @@
 div.saltoContenedor(ng-controller = 'CrearRecetaCtrl')
 	div
 		include ../include/errores.pug
-	div(ng-if="estadoDevolverRecetas == 'OK' ")
-		h2 La receta se ha añadido con exito. 
-	div.contenedorTitlo.tituloRecetaUsuario(ng-if="estadoVerificarRecetas == 'HAYDATOS' ")
+
+	div.loading(ng-if="estadoCrear == 'CARGANDO'") 
+		img(style="display:block; margin:0 auto;" src="/PFG/oauth2.0/app/image/loading.gif")
+	div.contenedorTitlo.tituloRecetaUsuario(ng-if="estadoVerificarRecetas == 'HAYDATOS' && estadoCrear != 'CARGANDO'")
 		h2#tituloReceta {{literales.recetas.aniadeReceta}}
-	form(name="recetaForm" ng-show="estadoVerificarRecetas == 'HAYDATOS' " ) 
+	form(name="recetaForm" ng-show="estadoVerificarRecetas == 'HAYDATOS' && estadoCrear != 'CARGANDO'" ) 
 		md-content.contenedorDetalle
 			md-input-container.md-block.md-input-has-value
 				div

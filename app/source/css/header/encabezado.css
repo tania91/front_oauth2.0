@@ -6,7 +6,6 @@
 #fondoCabecera{
 	background: #333333;
 	width: 100%;
-    margin-left: -8px;
     margin-top: -8px;
 }
 #subtitulo{
@@ -57,7 +56,6 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 20px;
-    font-weight: bold;
 }
 #estiloBuscador{
 	border-bottom-color: #333333;
@@ -99,9 +97,8 @@
     border-left-color: #333333;
     font-size: 20px;
     font-weight: bold;
-    margin-left: 10px;
     cursor: pointer;
     padding: 1px 20px;
     border-radius: 5px;
-    margin-left: 48px;
+    margin-left: 373px;
 }

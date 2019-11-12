@@ -17,4 +17,19 @@ angular.module('app' )
 				
 			
 		};
+
+		this.buscarRecetas = function(token){
+			return $http({
+				method:"GET",
+				url:"https://localhost:8445/recipes/recipes",
+				withCredentials: false,
+				headers:{
+					'Accept': 'application/json ',
+					'Authorization':  token,
+					'Content-type': "application/json"
+				}
+			})
+				
+			
+		};
 	}])

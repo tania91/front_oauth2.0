@@ -1,9 +1,18 @@
 
 <div ng-controller="UsuarioCtrl">
   <div class="posBotonesUsuario">
+    <input id="menuBoton" ng-if="estadoVerificar=='OK'" type="button" value="Todas las recetas" name="buscador" ng-click="debolverRecetas()"/>
     <input id="menuBoton" type="button" value="Añadir Receta" name="buscador" ng-click="aniadirReceta()"/><span class="saludo">{{literales.usuario.saludo}} {{usuario}}</span>
   </div>
   <div>
+    <div class="errorContent" ng-if="estado == 'ERROR' ">
+      <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+      <div class="mensajeError2">
+        <h2>Se ha producido un error. </h2>
+        <p></p>
+        <h3>No es posible cargar las recetas.</h3>
+      </div>
+    </div>
     <div class="errorContent" ng-if="estadoDevolverRecetas == 'ERROR' ">
       <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
       <div class="mensajeError2">
@@ -53,11 +62,13 @@
       </div>
     </div>
   </div>
+  <div class="loading" ng-if="estadoDevolverRecetas =='CARGANDO'"> <img style="display:block; margin:0 auto;" src="/PFG/oauth2.0/app/image/loading.gif"/></div>
   <div ng-if="estadoDevolverRecetas == 'OK' ">
     <h2>La receta se ha añadido con exito.</h2>
   </div>
   <div class="contenedorTitlo tituloRecetaUsuario" ng-if="estadoDevolverRecetas == 'HAYDATOS'">
-    <h2 id="tituloReceta">{{literales.recetas.receta}}</h2>
+    <h2 id="tituloReceta" ng-if="miReceta">{{literales.recetas.miReceta}} </h2>
+    <h2 id="tituloReceta" ng-if="!miReceta">{{literales.recetas.receta}}</h2>
   </div>
   <div class="contenedorPgn" ng-if="estadoDevolverRecetas == 'HAYDATOS' "> 
     <table class="tabla" ng-init="configPages()">
@@ -75,8 +86,5 @@
       <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage == page.no - 1" ng-click="setPage(page.no)" ng-repeat="page in pages">{{page.no}}</button>
       <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage &gt;= listadoRecetas.length/pageSize - 1" ng-click="currentPage = currentPage + 1">{{literales.recetas.izquierda}}</button>
     </div>
-  </div>
-  <div ng-if="estadoDevolverRecetas == 'ERROR' ">
-    <input id="menuBoton" type="button" value="Volver" name="valver" ng-click="volver()"/>
   </div>
 </div>

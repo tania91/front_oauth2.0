@@ -1,5 +1,13 @@
 
 <div ng-controller="AdminCtrl">
+  <div class="errorContent" ng-if="estado == 'ERROR' ">
+    <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+    <div class="mensajeError2">
+      <h2>Se ha producido un error. </h2>
+      <p></p>
+      <h3>No es posible cargar las recetas.</h3>
+    </div>
+  </div>
   <div class="errorContent" ng-if="estadoDevolverRecetas == 'ERROR' ">
     <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
     <div class="mensajeError2">
@@ -48,6 +56,7 @@
       <h3>No hay ningun usuario registrado</h3>
     </div>
   </div>
+  <div class="loading" ng-if="estadoDevolverRecetas =='CARGANDO'"> <img style="display:block; margin:0 auto;" src="/PFG/oauth2.0/app/image/loading.gif"/></div>
   <h3 class="tituloAdmin" ng-if="listadoUsuariosAdmin.length &gt; 0">Usuario de la aplicacion</h3>
   <table class="tablaAdmin" ng-if="listadoUsuariosAdmin.length &gt; 0">
     <tr class="headerAdmin">
@@ -57,14 +66,14 @@
       <th class="cabeceraTabla padding">Nº RECETA</th>
       <th class="cabeceraTabla paddingBoton"></th>
     </tr>
-    <tr class="bodyAdmin" ng-repeat="admin in listadoUsuariosAdmin track by admin.id">
+    <tr ng-repeat="admin in listadoUsuariosAdmin track by admin.id">
       <td class="celda"><span class="usuarioAdmin">{{admin.nombre}} {{admin.apellidos}}</span></td>
       <td class="celda"><span class="usuarioAdmin">{{admin.username}}</span></td>
       <td class="celda"><span class="usuarioAdmin">{{admin.email}}</span></td>
       <td class="celda" ng-if="admin.numRecetas != undefined"><span class="usuarioAdmin">{{admin.numRecetas}}</span></td>
       <td class="celda" ng-if="admin.numRecetas == undefined"><span class="usuarioAdmin">0</span></td>
       <td class="celda"> 
-        <input class="botonTablaAdmin" type="submit" value="Eliminar" ng-click="eliminarUsuario(admin.id)"/>
+        <input class="botonTablaAdmin" ng-if="estadoEliminar !='CARGANDO'" type="submit" value="Eliminar" ng-click="eliminarUsuario(admin.id)"/><img ng-if="estadoEliminar =='CARGANDO'" style="display:block; margin:0 auto;" src="/PFG/oauth2.0/app/image/miniLoading.gif"/>
       </td>
     </tr>
   </table>
@@ -75,17 +84,13 @@
       <th class="cabeceraTabla padding">USERNAME</th>
       <th class="cabeceraTabla paddingEmail">EMAIL</th>
       <th class="cabeceraTabla padding">Nº RECETA</th>
-      <th class="cabeceraTabla paddingBoton"></th>
     </tr>
-    <tr class="bodyAdmin" ng-repeat="tercero in listadoUsuariosTerceros track by tercero.id">
+    <tr ng-repeat="tercero in listadoUsuariosTerceros track by tercero.id">
       <td class="celda"><span class="usuarioAdmin">{{tercero.nombre}} {{tercero.apellidos}}</span></td>
       <td class="celda"><span class="usuarioAdmin">{{tercero.username}}</span></td>
       <td class="celda"><span class="usuarioAdmin">{{tercero.email}}</span></td>
       <td class="celda" ng-if="tercero.numRecetas != undefined"><span class="usuarioAdmin">{{tercero.numRecetas}}</span></td>
       <td class="celda" ng-if="tercero.numRecetas == undefined"><span class="usuarioAdmin">0</span></td>
-      <td class="celda"> 
-        <input class="botonTablaAdmin" type="submit" value="Eliminar" ng-click="eliminarUsuarioTercero(tercero.id)"/>
-      </td>
     </tr>
   </table>
 </div>

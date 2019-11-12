@@ -1,6 +1,63 @@
 
 <div class="contenido" ng-controller="PgnPrincipalCtrl">
-  <div class="contenedorTitlo">
+  <div class="errorContent" ng-if="estado == 'ERROR' ">
+    <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+    <div class="mensajeError2">
+      <h2>Se ha producido un error. </h2>
+      <p></p>
+      <h3>No es posible cargar las recetas.</h3>
+    </div>
+  </div>
+  <div class="errorContent" ng-if="estadoDevolverRecetas == 'ERROR' ">
+    <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+    <div class="mensajeError2">
+      <h2>Se ha producido un error. </h2>
+      <p></p>
+      <h3>Vuelve a entrar en un momento.</h3>
+    </div>
+  </div>
+  <div class="errorContent" ng-if="estadoVerificarRecetas == 'ERROR' ">
+    <div><img class="iconoError2" src="/PFG/oauth2.0/app/image/error.png"/></div>
+    <div class="mensajeError2">
+      <h2>Se ha producido un error. </h2>
+      <p></p>
+      <h3>La reseta no se ha podido guardar correctamente</h3>
+    </div>
+  </div>
+  <div class="errorContent" ng-if="eliminar == 'ERROR' ">
+    <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+    <div class="mensajeError2">
+      <h2>Se ha producido un error. </h2>
+      <p></p>
+      <h3>No es posible eliminar usuario.</h3>
+    </div>
+  </div>
+  <div class="errorContent" ng-if="estadoUsuariosAdmin == 'ERROR' || estadoUsuariosTerceros == 'ERROR' ">
+    <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+    <div class="mensajeError2">
+      <h2>Se ha producido un error. </h2>
+      <p></p>
+      <h3>No es posible recuperar los usuarios.</h3>
+    </div>
+  </div>
+  <div class="warningContent" ng-if="estadoDevolverRecetas == 'WARNING' ">
+    <div><img class="iconoWarning" src="/PFG/oauth2.0/app/image/warning.png"/></div>
+    <div class="mensajeWarning">
+      <h2>Usted no tiene recetas. </h2>
+      <p></p>
+      <h3>Añade alguna pulsando el boton de arriba.</h3>
+    </div>
+  </div>
+  <div class="warningContent" ng-if="estadoUsuariosTerceros == 'WARNING'  &amp;&amp; estadoUsuariosAdmin == 'WARNING' ">
+    <div><img class="iconoWarning" src="/PFG/oauth2.0/app/image/warning.png"/></div>
+    <div class="mensajeWarning">
+      <h2>Lo sentimos</h2>
+      <p></p>
+      <h3>No hay ningun usuario registrado</h3>
+    </div>
+  </div>
+  <div class="loading" ng-if="estado=='CARGANDO'"> <img style="display:block; margin:0 auto;" src="/PFG/oauth2.0/app/image/loading.gif"/></div>
+  <div class="contenedorTitlo" ng-if="estado=='HAYDATOS'"> 
     <h2 id="tituloReceta">{{literales.recetas.receta}} </h2>
   </div>
   <div class="contenedorPgn" ng-if="estado=='NOHAYDATOS'"> 

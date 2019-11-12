@@ -1,9 +1,12 @@
 
 		
 div.contenido(ng-controller = 'PgnPrincipalCtrl')
-	div.contenedorTitlo
+	include ../include/errores.pug
+	div.loading(ng-if="estado=='CARGANDO'") 
+		img(style="display:block; margin:0 auto;" src="/PFG/oauth2.0/app/image/loading.gif")
+	div.contenedorTitlo(ng-if="estado=='HAYDATOS'") 
 		h2#tituloReceta {{literales.recetas.receta}} 
-		
+	
 	div.contenedorPgn(ng-if="estado=='NOHAYDATOS'") 
 		h1 {{literales.recetas.noReceta}} 
 	div.contenedorPgn(ng-if="estado=='HAYDATOS'") 

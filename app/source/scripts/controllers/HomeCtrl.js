@@ -1,10 +1,11 @@
 angular.module('app' )
-	.controller('HomeCtrl',['$scope', 'LiteralesCtrl', '$location', '$rootScope', '$window', 'ServicioService',   
-		function($scope,  LiteralesCtrl, $location, $rootScope, $window, ServicioService ){
+	.controller('HomeCtrl',['$scope', 'LiteralesCtrl', '$location', '$rootScope', '$window', 'ServicioService', 'PgnUsuarioService', '$route',
+		function($scope,  LiteralesCtrl, $location, $rootScope, $window, ServicioService, PgnUsuarioService, $route ){
 			$rootScope.pasoActual = "INICIO";
 			$rootScope.volverInicio = false;
-			sessionStorage.clear();
 			$rootScope.estadoVerificar = "";
+
+    		
 
 			function inicioOperativa(){
 				$window.scrollTo(0, 0);
@@ -18,9 +19,14 @@ angular.module('app' )
 				if($rootScope.estadoVerificar == '' || $rootScope.estadoVerificar=='ERROR'){
 					$location.url('/home');
 				}else if($rootScope.estadoVerificar == 'OK' ){
-					if(sessionStorage.role == "USER"){
+					if(localStorage.role == "USER"){
+						if($location.$$path == '/cocinaRusa/inicio'){
+							$route.reload();
+						}else{
+							$location.url('/cocinaRusa/inicio');
+						}
 						$location.url('/cocinaRusa/inicio');
-					}else if(sessionStorage.role == "ADMIN"){
+					}else if(localStorage.role == "ADMIN"){
 						$location.url('/cocinaRusa/admin/inicio');
 					}else{
 						$location.url('/home');
@@ -32,6 +38,8 @@ angular.module('app' )
 			 
 
 			$scope.login = function(){
+				localStorage.login = "OK";
+				localStorage.removeItem('usuarioRegistrado');
 				$location.url('/cocinaRusa/login');
 				
 			}
@@ -41,7 +49,7 @@ angular.module('app' )
 				$rootScope.estadoEntrar = "";
 				$rootScope.estadoDevolverRecetas = "";
 				$rootScope.estadoVerificarRecetas = "";
-				sessionStorage.clear();
+				localStorage.clear();
 				$location.url('/home');	
 			}
 

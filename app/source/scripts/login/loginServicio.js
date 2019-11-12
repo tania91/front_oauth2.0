@@ -1,5 +1,5 @@
 angular.module('app' )
-	.service('ServicioService', ['$http', function($http){
+	.service('ServicioService', ['$http', 'ConfigClientCtrl', function($http, ConfigClientCtrl){
 		
 
 		this.crearUsuario = function(model){
@@ -31,40 +31,34 @@ angular.module('app' )
 				
 			};
 		this.login = function(registro){
-				var model = "grant_type=password&client_id=oaut2-client&client_secret=secret&username=" + registro.usuario + "&password=" + btoa(registro.contrasenia);
+			var cliente_id = ConfigClientCtrl.getConfig().propio.client_id;
+			var client_secret = ConfigClientCtrl.getConfig().propio.client_secret;
 
-				return $http({
-					method:"POST",
-					url:"https://localhost:8445/oauth/tokens",
-					data: model,
-					withCredentials: false,
-					headers:{
-						'Accept': 'application/json ',
-						'Authorization': 'Basic ' + btoa('oaut2-client:secret'),
-      					'Content-type': 'application/x-www-form-urlencoded'
-					}
-				})
-					
-				
-			};
+			var model = "grant_type=password&client_id="+cliente_id+"&client_secret="+client_secret+"&username=" + registro.usuario + "&password=" + btoa(registro.contrasenia);
 
-		/*this.logout = function(token){
 			return $http({
-					method:"GET",
-					url:"https://localhost:8445/oauth/logout",
-					withCredentials: false,
-					headers:{
-						'Authorization': token
-					}
-					
-				})
-		}*/
+				method:"POST",
+				url:"https://localhost:8445/oauth/tokens",
+				data: model,
+				withCredentials: false,
+				headers:{
+					'Accept': 'application/json ',
+					'Authorization': 'Basic ' + btoa(cliente_id+':' +client_secret),
+  					'Content-type': 'application/x-www-form-urlencoded'
+				}
+			})
+				
+			
+		};
 		
 
 		this.autorizacionOauth = function(){
+			var cliente_id = ConfigClientCtrl.getConfig().tercero.client_id;
+			var client_secret = ConfigClientCtrl.getConfig().tercero.client_secret;
+
 			return $http({
 					method:"GET",
-					url:"https://localhost:8446/oauth/authorize?response_type=code&client_id=oaut2-client&redirect_uri=http://www.cocinarusa.es:8081/PFG/oauth2.0/app/dest/html/"
+					url:"https://localhost:8446/oauth/authorize?response_type=code&client_id="+cliente_id+"&redirect_uri=http://www.cocinarusa.es:8081/PFG/oauth2.0/app/dest/html/#!/"
 					
 				})
 			

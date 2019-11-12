@@ -14,7 +14,5 @@ div(ng-controller = 'HomeCtrl')
 						tr#buscador
 							
 							td
-								input#estiloBuscador(type="text", name="buscador.text", model="buscador")
-								input.estiloBoton(type="button", value="Buscar", name="buscador", ng-click="")
 								input#menuBotonLogin(ng-if="estadoVerificar == '' || estadoVerificar=='ERROR'", type="button", value="LogIn", name="buscador", ng-click="login()")
 								input#menuBotonLogin(ng-if="estadoVerificar=='OK'", type="button", value="LogOut", name="buscador", ng-click="logout()")

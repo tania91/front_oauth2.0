@@ -1,6 +1,14 @@
 
 <div class="saltoContenedor" ng-controller="CrearRecetaCtrl">
   <div>
+    <div class="errorContent" ng-if="estado == 'ERROR' ">
+      <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+      <div class="mensajeError2">
+        <h2>Se ha producido un error. </h2>
+        <p></p>
+        <h3>No es posible cargar las recetas.</h3>
+      </div>
+    </div>
     <div class="errorContent" ng-if="estadoDevolverRecetas == 'ERROR' ">
       <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
       <div class="mensajeError2">
@@ -50,13 +58,11 @@
       </div>
     </div>
   </div>
-  <div ng-if="estadoDevolverRecetas == 'OK' ">
-    <h2>La receta se ha añadido con exito. </h2>
-  </div>
-  <div class="contenedorTitlo tituloRecetaUsuario" ng-if="estadoVerificarRecetas == 'HAYDATOS' ">
+  <div class="loading" ng-if="estadoCrear == 'CARGANDO'"> <img style="display:block; margin:0 auto;" src="/PFG/oauth2.0/app/image/loading.gif"/></div>
+  <div class="contenedorTitlo tituloRecetaUsuario" ng-if="estadoVerificarRecetas == 'HAYDATOS' &amp;&amp; estadoCrear != 'CARGANDO'">
     <h2 id="tituloReceta">{{literales.recetas.aniadeReceta}}</h2>
   </div>
-  <form name="recetaForm" ng-show="estadoVerificarRecetas == 'HAYDATOS' "> 
+  <form name="recetaForm" ng-show="estadoVerificarRecetas == 'HAYDATOS' &amp;&amp; estadoCrear != 'CARGANDO'"> 
     <md-content class="contenedorDetalle">
       <md-input-container class="md-block md-input-has-value">
         <div><img class="imagenCrearReceta cajaImagenCrear" id="recetaImagen" src="/PFG/oauth2.0/app/image/gorroGris.png" rname="imagen" equired="equired" md-select-on-focus="md-select-on-focus"/></div>

@@ -1,6 +1,6 @@
 angular.module('app' )
-	.controller('CrearRecetaCtrl',['$scope', '$rootScope', '$window', 'LiteralesCtrl', 'PgnUsuarioService', '$location', '$uibModal', 'PgnPrincipalService',
-		function($scope, $rootScope, $window,LiteralesCtrl, PgnUsuarioService, $location, $uibModal, PgnPrincipalService ){
+	.controller('CrearRecetaCtrl',['$scope', '$rootScope', '$window', 'LiteralesCtrl', 'PgnUsuarioService', '$location', '$uibModal', 'PgnPrincipalService', '$route',
+		function($scope, $rootScope, $window,LiteralesCtrl, PgnUsuarioService, $location, $uibModal, PgnPrincipalService, $route ){
 
 			$rootScope.estadoDevolverRecetas = "";
 			$scope.listadoRecetas = [];
@@ -20,12 +20,15 @@ angular.module('app' )
 				descripcionReceta:"",
 				ingredientesReceta: ""
 			}
-			if(sessionStorage.tipoLogin == "SINSSO" || sessionStorage.tipoLogin == "CONSSO"){
+			if(localStorage.tipoLogin == "SINSSO" || localStorage.tipoLogin == "CONSSO"){
 				$rootScope.estadoVerificar = "OK";
 			}else{
 				$rootScope.estadoVerificar = "";
 			}
 			
+			if($window.performance.navigation.type == 1){
+    			$route.reload();
+    		}
 
 			function inicioCrearReceta(){
 				$window.scrollTo(0, 0);
@@ -34,7 +37,11 @@ angular.module('app' )
 			}
 
 			$scope.recogerImagen = function(){
-				
+				$scope.estadoCrear = "CARGANDO";
+				var flag = "propio";
+				if(localStorage.code != undefined){
+					flag = "tercero";
+				}
 				if($scope.recetaForm.nombre.$error.required == undefined 
 					&& $scope.recetaForm.ingredientes.$error.required == undefined 
 					&& $scope.recetaForm.descripcion.$error.required == undefined ){
@@ -43,10 +50,11 @@ angular.module('app' )
 						imagen: $scope.fileImagen.data,
 						nombreReceta: $scope.receta.nombreReceta,
 						descripcion:$scope.receta.descripcionReceta,
-						ingredientes: $scope.receta.ingredientesReceta
+						ingredientes: $scope.receta.ingredientesReceta,
+						flag: flag
 
 					}; 
-					PgnUsuarioService.guardarReceta(model, sessionStorage.token)
+					PgnUsuarioService.guardarReceta(model, localStorage.token)
 						.then(function(respuesta){
 							$scope.estadoCrear = "HAYDATOS";
 							$rootScope.estadoDevolverRecetas = "OK";
@@ -62,17 +70,17 @@ angular.module('app' )
 								$rootScope.estadoEntrar = "";
 								$rootScope.estadoDevolverRecetas = "";
 								$rootScope.estadoVerificarRecetas = "";
-								sessionStorage.clear();
+								localStorage.clear();
 								$rootScope.estadoVerificar = "ERROR"
 								$scope.estadoCrear = "";
 								$location.url('/cocinaRusa/login');	
 							}else if(error.data.status == parseInt($scope.literales.status.unauthorized, 10)){
 								//Si es error 401
-								var token = sessionStorage.refreshToken.substring(7);
-								PgnPrincipalService.refreshToken(token, sessionStorage.code)
+								var token = localStorage.refreshToken.substring(7);
+								PgnPrincipalService.refreshToken(token, localStorage.code)
 									.then(function(respuesta){
-										sessionStorage.token = respuesta.headers("Authorization");
-										sessionStorage.refreshToken = respuesta.headers("Refreshtoken");
+										localStorage.token = respuesta.headers("Authorization");
+										localStorage.refreshToken = respuesta.headers("Refreshtoken");
 										$scope.recogerImagen();
 									}, function(error){
 										if(error.data.message.indexOf("JWT expired") != 1){
@@ -82,7 +90,7 @@ angular.module('app' )
 											//Si es por otra causa devuelve que usuario npo esta autorizado
 											$rootScope.mensajeErrorAutorizacion = "Ustes no esta autorizado";
 										}
-										sessionStorage.clear();
+										localStorage.clear();
 										$rootScope.estadoDevolverRecetas = "ERROR";
 										$rootScope.estadoVerificar = "ERROR"
 										$rootScope.show = true;

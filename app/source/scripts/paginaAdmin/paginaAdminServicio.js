@@ -25,16 +25,11 @@ angular.module('app' )
 			
 		};
 
-		this.eliminarUsuario = function( token, tipoUsuario, id){
-			var url = "";
-			if(tipoUsuario == "tercero"){
-				url = "https://localhost:8446/admin/delete/"+id;
-			}else{
-				url = "https://localhost:8445/admin/delete/"+id;
-			}
+		this.eliminarUsuario = function( token, id){
+			
 			return $http({
 				method:"DELETE",
-				url:url,
+				url:"https://localhost:8445/admin/delete/"+id,
 				withCredentials: false,
 				headers:{
 					'Accept': 'application/json ',
@@ -62,20 +57,6 @@ angular.module('app' )
 			
 		};
 
-		this.eliminarUsuarioRecetas = function(token, id){
-			
-			return $http({
-				method:"DELETE",
-				url: "https://localhost:8445/admin/delete/recipe/" + id,
-				withCredentials: false,
-				headers:{
-					'Accept': 'application/json ',
-					'Authorization':  token,
-					'Content-type': "application/json"
-				}
-			})
-				
-			
-		};
+		
 
 	}])
