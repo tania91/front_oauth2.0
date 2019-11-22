@@ -36749,7 +36749,7 @@ angular.module('app')
 			this.getConfig = function(){
 				return {
 					"propio":{
-						"client_id": "nhfgbdt.F4KJUasnzpriWPKMVNHF9",
+						"client_id": "nhfgbdt.F4KJUasnzpriWPKMVNHF98",
 						"client_secret": "375252635769272e6171675b4b3279707e20306e3f253e79592b352058"
 					},
 					"tercero": {
@@ -36760,7 +36760,7 @@ angular.module('app')
 				};
 			};
 			
-	});
+	});8
 angular.module('app')
 	.service('LiteralesCtrl', function (){
 			
@@ -36820,7 +36820,9 @@ angular.module('app')
 					},
 					"errores":{
 						"tiempo": "JWT expired",
-						"credenciales": "Authentication Failed: Bad credentials"
+						"credenciales": "Authentication Failed: Bad credentials",
+						"tokenErroneo": "Unable to read JSON value:",
+						"bearerErroneo": "Illegal base64url character: ' '"
 						
 					},
 					"status":{
@@ -36832,24 +36834,27 @@ angular.module('app')
 			
 		});
 angular.module('app' )
-	.controller('HomeCtrl',['$scope', 'LiteralesCtrl', '$location', '$rootScope', '$window', 'ServicioService', 'PgnUsuarioService', '$route',
-		function($scope,  LiteralesCtrl, $location, $rootScope, $window, ServicioService, PgnUsuarioService, $route ){
+	.controller('HomeCtrl',['$scope', 'LiteralesCtrl', '$location', '$rootScope', '$window', 'ServicioService', 'PgnUsuarioService', '$route', 'PgnPrincipalService',
+		function($scope,  LiteralesCtrl, $location, $rootScope, $window, ServicioService, PgnUsuarioService, $route, PgnPrincipalService ){
 			$rootScope.pasoActual = "INICIO";
 			$rootScope.volverInicio = false;
 			$rootScope.estadoVerificar = "";
+			$rootScope.estadoEntrar = "";
+			$rootScope.estadoLogout = "";
+			
 
     		
 
 			function inicioOperativa(){
 				$window.scrollTo(0, 0);
 				$scope.literales = LiteralesCtrl.getLiterales();
-
-				
-
 			}
+			
 
 			$scope.recargar = function(){
 				if($rootScope.estadoVerificar == '' || $rootScope.estadoVerificar=='ERROR'){
+					$rootScope.estadoDevolverRecetas = "";
+					localStorage.clear();
 					$location.url('/home');
 				}else if($rootScope.estadoVerificar == 'OK' ){
 					if(localStorage.role == "USER"){
@@ -36862,6 +36867,7 @@ angular.module('app' )
 					}else if(localStorage.role == "ADMIN"){
 						$location.url('/cocinaRusa/admin/inicio');
 					}else{
+						localStorage.clear();
 						$location.url('/home');
 					}
 					
@@ -36869,7 +36875,6 @@ angular.module('app' )
 				
 			}; 
 			 
-
 			$scope.login = function(){
 				localStorage.login = "OK";
 				localStorage.removeItem('usuarioRegistrado');
@@ -36878,14 +36883,32 @@ angular.module('app' )
 			}
 
 			$scope.logout = function(){
-				$rootScope.estadoVerificar = "";
-				$rootScope.estadoEntrar = "";
-				$rootScope.estadoDevolverRecetas = "";
-				$rootScope.estadoVerificarRecetas = "";
-				localStorage.clear();
-				$location.url('/home');	
+				PgnPrincipalService.logout(localStorage.token, localStorage.code)
+						.then(function(respuesta){
+							$rootScope.estadoUsuariosAdmin="";
+							$rootScope.estadoUsuariosTerceros ="";
+							$rootScope.estadoLogout = "";
+							$rootScope.estadoVerificar = "";
+							$rootScope.estadoEntrar = "";
+							$rootScope.estadoDevolverRecetas = "";
+							$rootScope.estadoVerificarRecetas = "";
+							localStorage.clear();
+							$location.url('/home');	
+						},function(error){
+							$rootScope.estadoUsuariosAdmin="";
+							$rootScope.estadoUsuariosTerceros ="";
+							$rootScope.estadoLogout = "";
+							$rootScope.estadoVerificar = "";
+							$rootScope.estadoEntrar = "";
+							$rootScope.estadoDevolverRecetas = "";
+							$rootScope.estadoVerificarRecetas = "";
+							localStorage.clear();
+							$location.url('/home');	
+						});
+				
 			}
 
+			
 
 			inicioOperativa();
 
@@ -36946,6 +36969,9 @@ angular.module('app' )
 	      	$scope.pageSize = 6;
 	     	$scope.pages = [];
 	     	$scope.miReceta = false;
+	     	
+
+
 
 	     	
 
@@ -37181,7 +37207,7 @@ angular.module('app' )
 		this.buscarUsuarioConToken = function(token, code, tipoConeccion){
 
 			var url = "";
-			if(code != undefined || tipoConeccion == "CONSSO"){
+			if(code != undefined ){
 				url = "https://localhost:8446/users/user";
 			}else{
 				url = "https://localhost:8445/users/user"
@@ -37195,14 +37221,304 @@ angular.module('app' )
 					'Authorization': token
 				}
 			})
+	
+		};
+
+		this.logout = function(token, code, tipoConeccion){
+			var cliente_id = ConfigClientCtrl.getConfig().propio.client_id;
+			var client_secret = ConfigClientCtrl.getConfig().propio.client_secret;
+
+			var model = "token="+token+"&token_type_hint=access_token";
+
+			var url = "";
+			if(code != undefined || tipoConeccion == "CONSSO"){
+				url = "https://localhost:8446/oauth/tokens/revoke";
+			}else{
+				url = "https://localhost:8445/oauth/tokens/revoke"
+			}
+
+			return $http({
+				method:"POST",
+				url:url,
+				data: model,
+				withCredentials: false,
+				headers:{
+					'Accept': 'application/json ',
+					'Authorization': 'Basic ' + btoa(cliente_id+':' +client_secret),
+  					'Content-type': 'application/x-www-form-urlencoded'
+				}
+			})
+				
 			
-				
-					
-				
-			};
+		};
 
 		
 		
+	}])
+angular.module('app' )
+	.controller('AdminCtrl',['$scope',  'LiteralesCtrl', '$rootScope', '$routeParams',  '$location', '$q', 'PgnAdminService','PgnPrincipalService', '$window',
+		function($scope,  LiteralesCtrl, $rootScope, $routeParams, $location, $q, PgnAdminService, PgnPrincipalService, $window){
+
+			$scope.literales = [];
+			$scope.estado = "";
+			$scope.estadoEliminar = "";
+			$rootScope.estadoUsuariosTerceros = "";
+			$rootScope.estadoUsuariosAdmin = "";
+			$rootScope.eliminar = "";
+			$rootScope.mensajeError = "";
+			$rootScope.show = false;
+			$scope.estadoLogout = localStorage.estadoLogout;
+
+
+
+			function inicioAdmin(){
+				$window.scrollTo(0, 0);
+				$scope.literales = LiteralesCtrl.getLiterales();
+				$scope.usuario = localStorage.sub;
+				$scope.estado = "CARGANDO";
+				//Se recuperan los usuarios propios de la pagina
+				PgnAdminService.devolverUsuarios(localStorage.token, "propio")
+					.then(function(respuesta){
+						$rootScope.estadoVerificar = "OK";
+						$rootScope.estadoUsuariosAdmin = "HAYDATOS";
+						$scope.listadoUsuariosAdmin = respuesta.data;
+						
+						if($scope.listadoUsuariosAdmin.length == 0){
+							$rootScope.estadoUsuariosAdmin = "WARNING";
+						}
+
+						  
+						//Se recuperan los usurio que estan registrados en una pagina de tercero
+						PgnAdminService.devolverUsuarios(localStorage.token)
+							.then(function(respuestaTercero){
+								$rootScope.estadoUsuariosTerceros = "HAYDATOS";
+								$scope.listadoUsuariosTerceros = respuestaTercero.data;
+								
+								if($scope.listadoUsuariosTerceros.length == 0){
+									$rootScope.estadoUsuariosTerceros = "WARNING";
+								}
+
+								//Se recuperan las recetas de un usuario
+								PgnAdminService.buscarRecetasPorId(localStorage.token)
+									.then(function(respuesta){
+
+										var cont = 0;
+
+										for(var y = 0; y < $scope.listadoUsuariosTerceros.length; y++){
+											cont = 0;
+											for(var i  = 0; i < respuesta.data.length; i++){
+												if($scope.listadoUsuariosTerceros[y].id+1000 ==  respuesta.data[i].identificadorUsuario ){
+													cont++;
+												}
+											}
+											$scope.listadoUsuariosTerceros[y].numRecetas = cont;
+										}
+
+										for(var z = 0; z < $scope.listadoUsuariosAdmin.length; z++){
+											cont = 0;
+											for(var i  =0; i < respuesta.data.length; i++){
+												if($scope.listadoUsuariosAdmin[z].id ==  respuesta.data[i].identificadorUsuario ){
+													cont++;
+												}
+											}
+											$scope.listadoUsuariosAdmin[z].numRecetas = cont;
+										}
+
+
+										$rootScope.estadoUsuariosTerceros = "HAYDATOS";
+										$scope.listadoRecetasAdmin = respuesta.data;
+										
+										if($scope.listadoRecetasAdmin.length == 0){
+											$rootScope.estadoUsuariosTerceros = "WARNING";
+										}
+										$scope.estado = "";
+									}, function(error){
+										$scope.estado = "";
+										tratarError(error);
+									});
+							}, function(error){
+								tratarError(error);
+							});
+						
+					}, function(error){
+						tratarError(error);
+					});
+
+
+	
+			}
+
+
+			function tratarError(error, tipoUsuario){
+				if(error.data.status == parseInt($scope.literales.status.forbiden, 10)){
+					//Si es error 403 devuelve el usuario no esta autorizado
+					$rootScope.estadoEntrar = "";
+					if(tipoUsuario == "propio"){
+						$rootScope.estadoUsuariosAdmin = "";
+					}else if(tipoUsuario == "eliminar"){
+						$rootScope.eliminar = "";
+					}else{
+						$rootScope.estadoUsuariosTerceros = "";
+					}
+					$rootScope.estadoUsuariosAdmin="";
+					$rootScope.estadoUsuariosTerceros ="";
+					$rootScope.estadoVerificar = "ERROR";
+					localStorage.clear()
+					localStorage.error = "ERRORROL"
+					$location.url('/cocinaRusa/login');	
+				}else if(error.data.status == parseInt($scope.literales.status.unauthorized, 10)){
+					if(error.data.message.indexOf($scope.literales.errores.tokenErroneo) != -1){
+						$rootScope.estadoUsuariosAdmin="";
+						$rootScope.estadoUsuariosTerceros ="";
+						$rootScope.datosUsuario = false;
+						$rootScope.estadoEntrar = "";
+						$rootScope.estadoDevolverRecetas = "";
+						$rootScope.estadoVerificarRecetas = "";
+						localStorage.clear()
+						$rootScope.estadoVerificar = "ERROR";
+						localStorage.error = "ERRORROL";
+						$location.url('/cocinaRusa/login');	
+					}else{
+						//Si es error 401 se llama a refresh token
+						var token = localStorage.refreshToken.substring(7);
+						PgnPrincipalService.refreshToken(token, localStorage.code)
+							.then(function(respuesta){
+								localStorage.token = respuesta.headers("Authorization");
+								localStorage.refreshToken = respuesta.headers("Refreshtoken");
+								guardarDatosUsuario(localStorage.token);
+								if(tipoUsuario == "eliminar"){
+									$scope.eliminarUsuario();
+								}else{
+										inicioAdmin();
+								}
+								
+							}, function(error){
+								if(error.data.message.indexOf("JWT expired") != 1){
+									//Si es por tiempo
+									$rootScope.mensajeErrorAutorizacion = "Su sesion se ha expirado";
+								}else{
+									//Si es por otra causa devuelve que usuario npo esta autorizado
+									$rootScope.mensajeErrorAutorizacion = "Ustes no esta autorizado";
+								}
+								localStorage.clear();
+								$rootScope.estadoEntrar = "ERRORROL"
+								if(tipoUsuario == "propio"){
+									$rootScope.estadoUsuariosAdmin = "";
+								}else if(tipoUsuario == "eliminar"){
+									$rootScope.eliminar = "";
+								}else{
+									$rootScope.estadoUsuariosTerceros = "";
+								}
+								$rootScope.estadoVerificar = "ERROR";
+								localStorage.error = "ERRORROL"
+								$rootScope.show = true;
+								$location.url('/cocinaRusa/login');
+							});
+					}
+					
+				}else{
+					if(tipoUsuario == "propio"){
+						$rootScope.estadoUsuariosAdmin = "ERROR";
+					}else if(tipoUsuario == "eliminar"){
+						$rootScope.eliminar = "ERROR";
+					}else{
+						$rootScope.estadoUsuariosTerceros = "ERROR";
+					}
+					$rootScope.estadoVerificar = "OK";
+				}
+
+			}
+
+			$scope.eliminarUsuario = function(id){
+				$scope.estadoEliminar = "CARGANDO";
+				//Se elimina el usuario
+				PgnAdminService.eliminarUsuario(localStorage.token, id)
+					.then(function(respuesta){
+						$rootScope.eliminar = "OK";
+						$scope.estadoEliminar = "";
+						inicioAdmin();
+					}, function(error){
+						$scope.estadoEliminar = "";
+						tratarError(error,"eliminar");
+					});
+			}
+
+			
+
+			function guardarDatosUsuario(cadena){
+				var aux = cadena.substring(cadena.indexOf(".")+1);
+				var datosBase64 = aux.substring(0,aux.indexOf("."));
+
+				localStorage.sub = angular.fromJson(atob(datosBase64)).sub;
+				localStorage.id = angular.fromJson(atob(datosBase64)).id;
+				localStorage.role = angular.fromJson(atob(datosBase64)).roles[0];
+			}
+
+			inicioAdmin();
+
+	}]);
+
+angular.module('app' )
+	.service('PgnAdminService', ['$http', function($http){
+		
+	
+
+
+		this.devolverUsuarios = function(token, tipoUsuario){
+			var url = "";
+			if(tipoUsuario != "propio"){
+				url = "https://localhost:8446/admin/all/users";
+			}else{
+				url = "https://localhost:8445/admin/all/users"
+			}
+			return $http({
+				method:"GET",
+				url:url,
+				withCredentials: false,
+				headers:{
+					'Accept': 'application/json ',
+					'Authorization':  token,
+					'Content-type': "application/json"
+				}
+			})
+				
+			
+		};
+
+		this.eliminarUsuario = function( token, id){
+			
+			return $http({
+				method:"DELETE",
+				url:"https://localhost:8445/admin/delete/"+id,
+				withCredentials: false,
+				headers:{
+					'Accept': 'application/json ',
+					'Authorization':  token,
+					'Content-type': "application/json"
+				}
+			})
+				
+			
+		};
+
+		this.buscarRecetasPorId = function( token){
+			
+			return $http({
+				method:"GET",
+				url: "https://localhost:8445/admin/all/recipe",
+				withCredentials: false,
+				headers:{
+					'Accept': 'application/json ',
+					'Authorization':  token,
+					'Content-type': "application/json"
+				}
+			})
+				
+			
+		};
+
+		
+
 	}])
 angular.module('app')
 	.controller('LoginCtrl',['$scope', 'LiteralesCtrl', '$rootScope', '$window', 'ServicioService', '$http', '$location', '$uibModal',
@@ -37228,6 +37544,7 @@ angular.module('app')
 			$scope.registro.contrasenia="";
 			$scope.registro.email="";
 			$scope.estadoCrear = "";
+			$rootScope.estadoEntrar = "";
 
 			if(localStorage.error == "ERRORROL"){
 				$rootScope.estadoEntrar = localStorage.error;
@@ -37238,7 +37555,7 @@ angular.module('app')
 
 			$rootScope.mensajeError = "";
 
-			
+
 			function inicioLogin(){
 				$window.scrollTo(0, 0);
 				$scope.literales = LiteralesCtrl.getLiterales();
@@ -37467,7 +37784,7 @@ angular.module('app' )
 			var cliente_id = ConfigClientCtrl.getConfig().propio.client_id;
 			var client_secret = ConfigClientCtrl.getConfig().propio.client_secret;
 
-			var model = "grant_type=password&client_id="+cliente_id+"&client_secret="+client_secret+"&username=" + registro.usuario + "&password=" + btoa(registro.contrasenia);
+			var model = "grant_type=password&client_id="+cliente_id+"&client_secret="+btoa(client_secret)+"&username=" + registro.usuario + "&password=" + btoa(registro.contrasenia);
 
 			return $http({
 				method:"POST",
@@ -37498,253 +37815,6 @@ angular.module('app' )
 		};
 	}])
 angular.module('app' )
-	.controller('AdminCtrl',['$scope',  'LiteralesCtrl', '$rootScope', '$routeParams',  '$location', '$q', 'PgnAdminService','PgnPrincipalService', '$window',
-		function($scope,  LiteralesCtrl, $rootScope, $routeParams, $location, $q, PgnAdminService, PgnPrincipalService, $window){
-
-			$scope.literales = [];
-			$scope.estado = "";
-			$scope.estadoEliminar = "";
-			$rootScope.estadoUsuariosTerceros = "";
-			$rootScope.estadoUsuariosAdmin = "";
-			$rootScope.eliminar = "";
-			$rootScope.mensajeError = "";
-			$rootScope.show = false;
-
-
-
-			function inicioAdmin(){
-				$window.scrollTo(0, 0);
-				$scope.literales = LiteralesCtrl.getLiterales();
-				$scope.usuario = localStorage.sub;
-				$scope.estado = "CARGANDO";
-				//Se recuperan los usuarios propios de la pagina
-				PgnAdminService.devolverUsuarios(localStorage.token, "propio")
-					.then(function(respuesta){
-						$rootScope.estadoVerificar = "OK";
-						$rootScope.estadoUsuariosAdmin = "HAYDATOS";
-						$scope.listadoUsuariosAdmin = respuesta.data;
-						
-						if($scope.listadoUsuariosAdmin.length == 0){
-							$rootScope.estadoUsuariosAdmin = "WARNING";
-						}
-
-						  
-						//Se recuperan los usurio que estan registrados en una pagina de tercero
-						PgnAdminService.devolverUsuarios(localStorage.token)
-							.then(function(respuestaTercero){
-								$rootScope.estadoUsuariosTerceros = "HAYDATOS";
-								$scope.listadoUsuariosTerceros = respuestaTercero.data;
-								
-								if($scope.listadoUsuariosTerceros.length == 0){
-									$rootScope.estadoUsuariosTerceros = "WARNING";
-								}
-
-								//Se recuperan las recetas de un usuario
-								PgnAdminService.buscarRecetasPorId(localStorage.token)
-									.then(function(respuesta){
-
-										var cont = 0;
-
-										for(var y = 0; y < $scope.listadoUsuariosTerceros.length; y++){
-											cont = 0;
-											for(var i  = 0; i < respuesta.data.length; i++){
-												if($scope.listadoUsuariosTerceros[y].id+1000 ==  respuesta.data[i].identificadorUsuario ){
-													cont++;
-												}
-											}
-											$scope.listadoUsuariosTerceros[y].numRecetas = cont;
-										}
-
-										for(var z = 0; z < $scope.listadoUsuariosAdmin.length; z++){
-											cont = 0;
-											for(var i  =0; i < respuesta.data.length; i++){
-												if($scope.listadoUsuariosAdmin[z].id ==  respuesta.data[i].identificadorUsuario ){
-													cont++;
-												}
-											}
-											$scope.listadoUsuariosAdmin[z].numRecetas = cont;
-										}
-
-
-										$rootScope.estadoUsuariosTerceros = "HAYDATOS";
-										$scope.listadoRecetasAdmin = respuesta.data;
-										
-										if($scope.listadoRecetasAdmin.length == 0){
-											$rootScope.estadoUsuariosTerceros = "WARNING";
-										}
-										$scope.estado = "";
-									}, function(error){
-										$scope.estado = "";
-										tratarError(error);
-									});
-							}, function(error){
-								tratarError(error);
-							});
-						
-					}, function(error){
-						tratarError(error);
-					});
-
-
-	
-			}
-
-
-			function tratarError(error, tipoUsuario){
-				if(error.data.status == parseInt($scope.literales.status.forbiden, 10)){
-					//Si es error 403 devuelve el usuario no esta autorizado
-					$rootScope.estadoEntrar = "";
-					if(tipoUsuario == "propio"){
-						$rootScope.estadoUsuariosAdmin = "";
-					}else if(tipoUsuario == "eliminar"){
-						$rootScope.eliminar = "";
-					}else{
-						$rootScope.estadoUsuariosTerceros = "";
-					}
-					
-					localStorage.clear()
-					localStorage.error = "ERRORROL"
-					$location.url('/cocinaRusa/login');	
-				}else if(error.data.status == parseInt($scope.literales.status.unauthorized, 10)){
-					//Si es error 401 se llama a refresh token
-					var token = localStorage.refreshToken.substring(7);
-					PgnPrincipalService.refreshToken(token, localStorage.code)
-						.then(function(respuesta){
-							localStorage.token = respuesta.headers("Authorization");
-							localStorage.refreshToken = respuesta.headers("Refreshtoken");
-							guardarDatosUsuario(localStorage.token);
-							if(tipoUsuario == "eliminar"){
-								$scope.eliminarUsuario();
-							}else{
-									inicioAdmin();
-							}
-							
-						}, function(error){
-							if(error.data.message.indexOf("JWT expired") != 1){
-								//Si es por tiempo
-								$rootScope.mensajeErrorAutorizacion = "Su sesion se ha expirado";
-							}else{
-								//Si es por otra causa devuelve que usuario npo esta autorizado
-								$rootScope.mensajeErrorAutorizacion = "Ustes no esta autorizado";
-							}
-							localStorage.clear();
-							$rootScope.estadoEntrar = "ERRORROL"
-							if(tipoUsuario == "propio"){
-								$rootScope.estadoUsuariosAdmin = "";
-							}else if(tipoUsuario == "eliminar"){
-								$rootScope.eliminar = "";
-							}else{
-								$rootScope.estadoUsuariosTerceros = "";
-							}
-							localStorage.error = "ERRORROL"
-							$rootScope.show = true;
-							$location.url('/cocinaRusa/login');
-						});
-				}else{
-					if(tipoUsuario == "propio"){
-						$rootScope.estadoUsuariosAdmin = "ERROR";
-					}else if(tipoUsuario == "eliminar"){
-						$rootScope.eliminar = "ERROR";
-					}else{
-						$rootScope.estadoUsuariosTerceros = "ERROR";
-					}
-					$rootScope.estadoVerificar = "OK";
-				}
-
-			}
-
-			$scope.eliminarUsuario = function(id){
-				$scope.estadoEliminar = "CARGANDO";
-				//Se elimina el usuario
-				PgnAdminService.eliminarUsuario(localStorage.token, id)
-					.then(function(respuesta){
-						$rootScope.eliminar = "OK";
-						$scope.estadoEliminar = "";
-						inicioAdmin();
-					}, function(error){
-						$scope.estadoEliminar = "";
-						tratarError(error,"eliminar");
-					});
-			}
-
-			
-
-			function guardarDatosUsuario(cadena){
-				var aux = cadena.substring(cadena.indexOf(".")+1);
-				var datosBase64 = aux.substring(0,aux.indexOf("."));
-
-				localStorage.sub = angular.fromJson(atob(datosBase64)).sub;
-				localStorage.id = angular.fromJson(atob(datosBase64)).id;
-				localStorage.role = angular.fromJson(atob(datosBase64)).roles[0];
-			}
-
-			inicioAdmin();
-
-	}]);
-
-angular.module('app' )
-	.service('PgnAdminService', ['$http', function($http){
-		
-	
-
-
-		this.devolverUsuarios = function(token, tipoUsuario){
-			var url = "";
-			if(tipoUsuario != "propio"){
-				url = "https://localhost:8446/admin/all/users";
-			}else{
-				url = "https://localhost:8445/admin/all/users"
-			}
-			return $http({
-				method:"GET",
-				url:url,
-				withCredentials: false,
-				headers:{
-					'Accept': 'application/json ',
-					'Authorization':  token,
-					'Content-type': "application/json"
-				}
-			})
-				
-			
-		};
-
-		this.eliminarUsuario = function( token, id){
-			
-			return $http({
-				method:"DELETE",
-				url:"https://localhost:8445/admin/delete/"+id,
-				withCredentials: false,
-				headers:{
-					'Accept': 'application/json ',
-					'Authorization':  token,
-					'Content-type': "application/json"
-				}
-			})
-				
-			
-		};
-
-		this.buscarRecetasPorId = function( token){
-			
-			return $http({
-				method:"GET",
-				url: "https://localhost:8445/admin/all/recipe",
-				withCredentials: false,
-				headers:{
-					'Accept': 'application/json ',
-					'Authorization':  token,
-					'Content-type': "application/json"
-				}
-			})
-				
-			
-		};
-
-		
-
-	}])
-angular.module('app' )
 	.controller('CrearRecetaCtrl',['$scope', '$rootScope', '$window', 'LiteralesCtrl', 'PgnUsuarioService', '$location', '$uibModal', 'PgnPrincipalService', '$route',
 		function($scope, $rootScope, $window,LiteralesCtrl, PgnUsuarioService, $location, $uibModal, PgnPrincipalService, $route ){
 
@@ -37753,6 +37823,7 @@ angular.module('app' )
 			$scope.literales = [];
 			$scope.estadoCrearReceta = "";
 			$scope.validarUsuario = "";
+			$scope.estadoLogout = localStorage.estadoLogout;
 			
 			$rootScope.estadoVerificarRecetas = "";
 			
@@ -37772,9 +37843,6 @@ angular.module('app' )
 				$rootScope.estadoVerificar = "";
 			}
 			
-			if($window.performance.navigation.type == 1){
-    			$route.reload();
-    		}
 
 			function inicioCrearReceta(){
 				$window.scrollTo(0, 0);
@@ -37783,7 +37851,7 @@ angular.module('app' )
 			}
 
 			$scope.recogerImagen = function(){
-				$scope.estadoCrear = "CARGANDO";
+				
 				var flag = "propio";
 				if(localStorage.code != undefined){
 					flag = "tercero";
@@ -37791,6 +37859,7 @@ angular.module('app' )
 				if($scope.recetaForm.nombre.$error.required == undefined 
 					&& $scope.recetaForm.ingredientes.$error.required == undefined 
 					&& $scope.recetaForm.descripcion.$error.required == undefined ){
+					$scope.estadoCrear = "CARGANDO";
 					var model = {
 
 						imagen: $scope.fileImagen.data,
@@ -37813,35 +37882,53 @@ angular.module('app' )
 							if(error.data.status == parseInt($scope.literales.status.forbiden, 10)){
 								//Si es error 403 devuelve el usuario no esta autorizado
 								$rootScope.datosUsuario = false;
-								$rootScope.estadoEntrar = "";
+								$rootScope.estadoEntrar = '';
 								$rootScope.estadoDevolverRecetas = "";
 								$rootScope.estadoVerificarRecetas = "";
+								$rootScope.estadoUsuariosAdmin="";
+								$rootScope.estadoUsuariosTerceros ="";
 								localStorage.clear();
 								$rootScope.estadoVerificar = "ERROR"
+								localStorage.error = "ERRORROL";
 								$scope.estadoCrear = "";
 								$location.url('/cocinaRusa/login');	
 							}else if(error.data.status == parseInt($scope.literales.status.unauthorized, 10)){
-								//Si es error 401
-								var token = localStorage.refreshToken.substring(7);
-								PgnPrincipalService.refreshToken(token, localStorage.code)
-									.then(function(respuesta){
-										localStorage.token = respuesta.headers("Authorization");
-										localStorage.refreshToken = respuesta.headers("Refreshtoken");
-										$scope.recogerImagen();
-									}, function(error){
-										if(error.data.message.indexOf("JWT expired") != 1){
-											//Si es por tiempo
-											$rootScope.mensajeErrorAutorizacion = "Su sesion se ha expirado";
-										}else{
-											//Si es por otra causa devuelve que usuario npo esta autorizado
-											$rootScope.mensajeErrorAutorizacion = "Ustes no esta autorizado";
-										}
-										localStorage.clear();
-										$rootScope.estadoDevolverRecetas = "ERROR";
-										$rootScope.estadoVerificar = "ERROR"
-										$rootScope.show = true;
-										$location.url('/cocinaRusa/login');
-									});
+								if(error.data.message.indexOf($scope.literales.errores.tokenErroneo) != -1){
+									$rootScope.datosUsuario = false;
+									$rootScope.estadoEntrar = '';
+									$rootScope.estadoDevolverRecetas = "";
+									$rootScope.estadoVerificarRecetas = "";
+									$rootScope.estadoUsuariosAdmin="";
+									$rootScope.estadoUsuariosTerceros ="";
+									localStorage.clear()
+									//$rootScope.estadoVerificar = "ERROR";
+									localStorage.error = "ERRORROL";
+									$location.url('/cocinaRusa/login');	
+								}else{
+									//Si es error 401
+									var token = localStorage.refreshToken.substring(7);
+									PgnPrincipalService.refreshToken(token, localStorage.code)
+										.then(function(respuesta){
+											localStorage.token = respuesta.headers("Authorization");
+											localStorage.refreshToken = respuesta.headers("Refreshtoken");
+											$scope.recogerImagen();
+										}, function(error){
+											if(error.data.message.indexOf("JWT expired") != 1){
+												//Si es por tiempo
+												$rootScope.mensajeErrorAutorizacion = "Su sesion se ha expirado";
+											}else{
+												//Si es por otra causa devuelve que usuario npo esta autorizado
+												$rootScope.mensajeErrorAutorizacion = "Ustes no esta autorizado";
+											}
+											localStorage.clear();
+											localStorage.error = "ERRORROL";
+											$rootScope.estadoDevolverRecetas = "ERROR";
+											$rootScope.estadoVerificar = "ERROR"
+											$rootScope.show = true;
+											$location.url('/cocinaRusa/login');
+										});
+								}
+								
 							}else{
 								$rootScope.estadoDevolverRecetas = "ERROR";
 								$rootScope.estadoVerificar = "ERROR";
@@ -37879,6 +37966,7 @@ angular.module('app' )
 			$scope.currentPage = 0;
 	      	$scope.pageSize = 6;
 	     	$scope.pages = [];
+	     	$scope.estadoLogout = localStorage.estadoLogout;
 
 			
 			$rootScope.mensajeError = "";
@@ -37892,7 +37980,7 @@ angular.module('app' )
 				$rootScope.estadoVerificar = "";
 			}
 			
-			
+
 			function inicioUsuario(){
 				
 					$rootScope.estadoDevolverRecetas = 'CARGANDO';
@@ -37935,45 +38023,62 @@ angular.module('app' )
 			function tratarError(error, flag){
 				if(error.data.status == parseInt($scope.literales.status.forbiden, 10)){
 					//Si es error 403 devuelve el usuario no esta autorizado
+					$rootScope.estadoUsuariosAdmin="";
+					$rootScope.estadoUsuariosTerceros ="";
 					$rootScope.datosUsuario = false;
 					$rootScope.estadoEntrar = "";
 					$rootScope.estadoDevolverRecetas = "";
 					$rootScope.estadoVerificarRecetas = "";
 					localStorage.clear()
-					//$rootScope.estadoVerificar = "ERROR";
+					$rootScope.estadoVerificar = "ERROR";
 					localStorage.error = "ERRORROL";
 					$location.url('/cocinaRusa/login');	
 				}else if(error.data.status == parseInt($scope.literales.status.unauthorized, 10)){
 					//Si es error 401
-					var token = localStorage.refreshToken.substring(7);
-					PgnPrincipalService.refreshToken(token, localStorage.code)
-						.then(function(respuesta){
-							localStorage.token = respuesta.headers("Authorization");
-							localStorage.refreshToken = respuesta.headers("Refreshtoken");
-							guardarDatosUsuario(localStorage.token);
-							if(flag == "buscar"){
-								$scope.debolverRecetas();
-							}else{
-								inicioUsuario();
-							}
-							
-						}, function(error){
-							if(error.data.message.indexOf("JWT expired") != 1){
-								//Si es por tiempo
-								$rootScope.mensajeErrorAutorizacion = "Su sesion se ha expirado";
-							}else{
-								//Si es por otra causa devuelve que usuario npo esta autorizado
-								$rootScope.mensajeErrorAutorizacion = "Ustes no esta autorizado";
-							}
-							localStorage.clear();
-							$rootScope.estadoEntrar = "ERRORROL"
-							$rootScope.estadoDevolverRecetas = "ERROR";
-							//$rootScope.estadoVerificar = "ERROR";
-							localStorage.error = "ERRORROL";
-							$rootScope.show = true;
-							$location.url('/cocinaRusa/login');
-						});
+					if(error.data.message.indexOf($scope.literales.errores.tokenErroneo) != -1 || error.data.message.indexOf($scope.literales.errores.bearerErroneo) != -1){
+						$rootScope.estadoUsuariosAdmin="";
+						$rootScope.estadoUsuariosTerceros ="";
+						$rootScope.datosUsuario = false;
+						$rootScope.estadoEntrar = "";
+						$rootScope.estadoDevolverRecetas = "";
+						$rootScope.estadoVerificarRecetas = "";
+						localStorage.clear()
+						$rootScope.estadoVerificar = "ERROR";
+						localStorage.error = "ERRORROL";
+						$location.url('/cocinaRusa/login');	
+					}else{
+						var token = localStorage.refreshToken.substring(7);
+						PgnPrincipalService.refreshToken(token, localStorage.code)
+							.then(function(respuesta){
+								localStorage.token = respuesta.headers("Authorization");
+								localStorage.refreshToken = respuesta.headers("Refreshtoken");
+								guardarDatosUsuario(localStorage.token);
+								if(flag == "buscar"){
+									$scope.debolverRecetas();
+								}else{
+									inicioUsuario();
+								}
+								
+							}, function(error){
+								if(error.data.message.indexOf("JWT expired") != 1){
+									//Si es por tiempo
+									$rootScope.mensajeErrorAutorizacion = "Su sesion se ha expirado";
+								}else{
+									//Si es por otra causa devuelve que usuario npo esta autorizado
+									$rootScope.mensajeErrorAutorizacion = "Ustes no esta autorizado";
+								}
+								localStorage.clear();
+								$rootScope.estadoDevolverRecetas = "";
+								$rootScope.estadoEntrar = "ERRORROL";
+								localStorage.error = "ERRORROL";
+								$rootScope.estadoVerificar = "ERROR";
+								$rootScope.show = true;
+								$location.url('/cocinaRusa/login');
+							});
+					}
+					
 				}else{
+					
 					$rootScope.estadoDevolverRecetas = "ERROR";
 					$rootScope.estadoVerificar = "OK";
 				}
@@ -38032,7 +38137,7 @@ angular.module('app' )
 		          $scope.currentPage = $scope.pages.length - 1;
 		      };
 
-		      $scope.setPage = function(index) {
+		    $scope.setPage = function(index) {
 		        $scope.currentPage = index - 1;
 		    };
 

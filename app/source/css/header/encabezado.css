@@ -102,3 +102,9 @@
     border-radius: 5px;
     margin-left: 373px;
 }
+.posErrorLogout{
+    margin-top: 5px;
+    position: absolute;
+    margin-left: 657px;
+    color: #ff0000;
+}

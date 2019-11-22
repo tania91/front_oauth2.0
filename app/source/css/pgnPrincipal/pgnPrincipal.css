@@ -6,6 +6,12 @@
     margin-left: 286px;
     background-color: #f2f2f2;
 }
+.contenedorPgnVacio{
+    width: 1326px;
+    margin-left: 286px;
+    background-color: #f2f2f2;
+    height: 325px;
+}
 .tabla{
 	position: static;
 }
@@ -67,6 +73,16 @@
 
 .estiloPie{
     margin-top: 20px;
+    margin-bottom: 20px;
+}
+.text-left{
+    text-align: left;
+}
+.text-right{
+    text-align: right;
+}
+.text-top{
+    margin-top: -17px;
 }
 .separador{
     border-top-style: dashed;

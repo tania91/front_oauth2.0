@@ -10,6 +10,7 @@ angular.module('app' )
 			$rootScope.eliminar = "";
 			$rootScope.mensajeError = "";
 			$rootScope.show = false;
+			$scope.estadoLogout = localStorage.estadoLogout;
 
 
 
@@ -102,45 +103,62 @@ angular.module('app' )
 					}else{
 						$rootScope.estadoUsuariosTerceros = "";
 					}
-					
+					$rootScope.estadoUsuariosAdmin="";
+					$rootScope.estadoUsuariosTerceros ="";
+					$rootScope.estadoVerificar = "ERROR";
 					localStorage.clear()
 					localStorage.error = "ERRORROL"
 					$location.url('/cocinaRusa/login');	
 				}else if(error.data.status == parseInt($scope.literales.status.unauthorized, 10)){
-					//Si es error 401 se llama a refresh token
-					var token = localStorage.refreshToken.substring(7);
-					PgnPrincipalService.refreshToken(token, localStorage.code)
-						.then(function(respuesta){
-							localStorage.token = respuesta.headers("Authorization");
-							localStorage.refreshToken = respuesta.headers("Refreshtoken");
-							guardarDatosUsuario(localStorage.token);
-							if(tipoUsuario == "eliminar"){
-								$scope.eliminarUsuario();
-							}else{
-									inicioAdmin();
-							}
-							
-						}, function(error){
-							if(error.data.message.indexOf("JWT expired") != 1){
-								//Si es por tiempo
-								$rootScope.mensajeErrorAutorizacion = "Su sesion se ha expirado";
-							}else{
-								//Si es por otra causa devuelve que usuario npo esta autorizado
-								$rootScope.mensajeErrorAutorizacion = "Ustes no esta autorizado";
-							}
-							localStorage.clear();
-							$rootScope.estadoEntrar = "ERRORROL"
-							if(tipoUsuario == "propio"){
-								$rootScope.estadoUsuariosAdmin = "";
-							}else if(tipoUsuario == "eliminar"){
-								$rootScope.eliminar = "";
-							}else{
-								$rootScope.estadoUsuariosTerceros = "";
-							}
-							localStorage.error = "ERRORROL"
-							$rootScope.show = true;
-							$location.url('/cocinaRusa/login');
-						});
+					if(error.data.message.indexOf($scope.literales.errores.tokenErroneo) != -1){
+						$rootScope.estadoUsuariosAdmin="";
+						$rootScope.estadoUsuariosTerceros ="";
+						$rootScope.datosUsuario = false;
+						$rootScope.estadoEntrar = "";
+						$rootScope.estadoDevolverRecetas = "";
+						$rootScope.estadoVerificarRecetas = "";
+						localStorage.clear()
+						$rootScope.estadoVerificar = "ERROR";
+						localStorage.error = "ERRORROL";
+						$location.url('/cocinaRusa/login');	
+					}else{
+						//Si es error 401 se llama a refresh token
+						var token = localStorage.refreshToken.substring(7);
+						PgnPrincipalService.refreshToken(token, localStorage.code)
+							.then(function(respuesta){
+								localStorage.token = respuesta.headers("Authorization");
+								localStorage.refreshToken = respuesta.headers("Refreshtoken");
+								guardarDatosUsuario(localStorage.token);
+								if(tipoUsuario == "eliminar"){
+									$scope.eliminarUsuario();
+								}else{
+										inicioAdmin();
+								}
+								
+							}, function(error){
+								if(error.data.message.indexOf("JWT expired") != 1){
+									//Si es por tiempo
+									$rootScope.mensajeErrorAutorizacion = "Su sesion se ha expirado";
+								}else{
+									//Si es por otra causa devuelve que usuario npo esta autorizado
+									$rootScope.mensajeErrorAutorizacion = "Ustes no esta autorizado";
+								}
+								localStorage.clear();
+								$rootScope.estadoEntrar = "ERRORROL"
+								if(tipoUsuario == "propio"){
+									$rootScope.estadoUsuariosAdmin = "";
+								}else if(tipoUsuario == "eliminar"){
+									$rootScope.eliminar = "";
+								}else{
+									$rootScope.estadoUsuariosTerceros = "";
+								}
+								$rootScope.estadoVerificar = "ERROR";
+								localStorage.error = "ERRORROL"
+								$rootScope.show = true;
+								$location.url('/cocinaRusa/login');
+							});
+					}
+					
 				}else{
 					if(tipoUsuario == "propio"){
 						$rootScope.estadoUsuariosAdmin = "ERROR";

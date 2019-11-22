@@ -4,10 +4,10 @@ div.contenido(ng-controller = 'PgnPrincipalCtrl')
 	include ../include/errores.pug
 	div.loading(ng-if="estado=='CARGANDO'") 
 		img(style="display:block; margin:0 auto;" src="/PFG/oauth2.0/app/image/loading.gif")
-	div.contenedorTitlo(ng-if="estado=='HAYDATOS'") 
+	div.contenedorTitlo(ng-if="estado=='HAYDATOS' || estado=='NOHAYDATOS'") 
 		h2#tituloReceta {{literales.recetas.receta}} 
 	
-	div.contenedorPgn(ng-if="estado=='NOHAYDATOS'") 
+	div.contenedorPgnVacio(ng-if="estado=='NOHAYDATOS'") 
 		h1 {{literales.recetas.noReceta}} 
 	div.contenedorPgn(ng-if="estado=='HAYDATOS'") 
 		
@@ -26,7 +26,7 @@ div.contenido(ng-controller = 'PgnPrincipalCtrl')
 					p.separacionPie( ng-click="entrarPagina(item)")
 						span.nombreReceta {{item.nombreReceta}}
 		div(class='btn-group').posBotonPaginacion
-			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1')
+			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage == 0' ng-click='currentPage = currentPage - 1') {{literales.recetas.derecha}}
 			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage == page.no - 1' ng-click='setPage(page.no)' ng-repeat='page in pages') {{page.no}}
-			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage >= listadoRecetas.length/pageSize - 1' , ng-click='currentPage = currentPage + 1')
+			button.buttonPaginacion(type='button' class='btn btn-default' ng-disabled='currentPage >= listadoRecetas.length/pageSize - 1' , ng-click='currentPage = currentPage + 1') {{literales.recetas.izquierda}}
 		

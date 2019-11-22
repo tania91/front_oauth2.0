@@ -2,7 +2,7 @@
 <div class="saltoContenedor" ng-controller="CrearRecetaCtrl">
   <div>
     <div class="errorContent" ng-if="estado == 'ERROR' ">
-      <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+      <div><img class="iconoError2" src="/PFG/oauth2.0/app/image/error.png"/></div>
       <div class="mensajeError2">
         <h2>Se ha producido un error. </h2>
         <p></p>
@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="errorContent" ng-if="estadoDevolverRecetas == 'ERROR' ">
-      <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+      <div><img class="iconoError2" src="/PFG/oauth2.0/app/image/error.png"/></div>
       <div class="mensajeError2">
         <h2>Se ha producido un error. </h2>
         <p></p>
@@ -116,7 +116,7 @@
           <md-content class="descripcionContenedor">
             <md-input-container class="md-block md-input-has-value">
               <div class="md-resize-wrapper">
-                <textarea class="contenedorDescripcion" name="descripcion" ng-model="receta.descripcionReceta" md-maxlength="700" required="required" md-select-on-focus="md-select-on-focus"></textarea>
+                <textarea class="contenedorDescripcion" name="descripcion" ng-model="receta.descripcionReceta" md-maxlength="1000" required="required" md-select-on-focus="md-select-on-focus"></textarea>
               </div>
               <div ng-messages="recetaForm.descripcion.$error" role="alert" multiple="multiple"> 
                 <div class="my-message" ng-message="required">La descripcion de la receta no puede ser vacia </div>
@@ -126,7 +126,7 @@
           </md-content>
         </div>
       </div>
-      <div class="botonDetalleReceta"> 
+      <div class="botonDetalleReceta">
         <input class="botonRecoger" type="submit" value="Guardar" ng-click="recogerImagen()"/>
         <input class="botonRecoger posBotonVolver" type="button" value="Volver" ng-click="volver()"/>
       </div>

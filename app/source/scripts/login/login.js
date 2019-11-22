@@ -22,6 +22,7 @@ angular.module('app')
 			$scope.registro.contrasenia="";
 			$scope.registro.email="";
 			$scope.estadoCrear = "";
+			$rootScope.estadoEntrar = "";
 
 			if(localStorage.error == "ERRORROL"){
 				$rootScope.estadoEntrar = localStorage.error;
@@ -32,7 +33,7 @@ angular.module('app')
 
 			$rootScope.mensajeError = "";
 
-			
+
 			function inicioLogin(){
 				$window.scrollTo(0, 0);
 				$scope.literales = LiteralesCtrl.getLiterales();

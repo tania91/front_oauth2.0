@@ -15,6 +15,9 @@ angular.module('app' )
 	      	$scope.pageSize = 6;
 	     	$scope.pages = [];
 	     	$scope.miReceta = false;
+	     	
+
+
 
 	     	
 

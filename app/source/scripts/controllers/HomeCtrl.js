@@ -1,22 +1,25 @@
 angular.module('app' )
-	.controller('HomeCtrl',['$scope', 'LiteralesCtrl', '$location', '$rootScope', '$window', 'ServicioService', 'PgnUsuarioService', '$route',
-		function($scope,  LiteralesCtrl, $location, $rootScope, $window, ServicioService, PgnUsuarioService, $route ){
+	.controller('HomeCtrl',['$scope', 'LiteralesCtrl', '$location', '$rootScope', '$window', 'ServicioService', 'PgnUsuarioService', '$route', 'PgnPrincipalService',
+		function($scope,  LiteralesCtrl, $location, $rootScope, $window, ServicioService, PgnUsuarioService, $route, PgnPrincipalService ){
 			$rootScope.pasoActual = "INICIO";
 			$rootScope.volverInicio = false;
 			$rootScope.estadoVerificar = "";
+			$rootScope.estadoEntrar = "";
+			$rootScope.estadoLogout = "";
+			
 
     		
 
 			function inicioOperativa(){
 				$window.scrollTo(0, 0);
 				$scope.literales = LiteralesCtrl.getLiterales();
-
-				
-
 			}
+			
 
 			$scope.recargar = function(){
 				if($rootScope.estadoVerificar == '' || $rootScope.estadoVerificar=='ERROR'){
+					$rootScope.estadoDevolverRecetas = "";
+					localStorage.clear();
 					$location.url('/home');
 				}else if($rootScope.estadoVerificar == 'OK' ){
 					if(localStorage.role == "USER"){
@@ -29,6 +32,7 @@ angular.module('app' )
 					}else if(localStorage.role == "ADMIN"){
 						$location.url('/cocinaRusa/admin/inicio');
 					}else{
+						localStorage.clear();
 						$location.url('/home');
 					}
 					
@@ -36,7 +40,6 @@ angular.module('app' )
 				
 			}; 
 			 
-
 			$scope.login = function(){
 				localStorage.login = "OK";
 				localStorage.removeItem('usuarioRegistrado');
@@ -45,14 +48,32 @@ angular.module('app' )
 			}
 
 			$scope.logout = function(){
-				$rootScope.estadoVerificar = "";
-				$rootScope.estadoEntrar = "";
-				$rootScope.estadoDevolverRecetas = "";
-				$rootScope.estadoVerificarRecetas = "";
-				localStorage.clear();
-				$location.url('/home');	
+				PgnPrincipalService.logout(localStorage.token, localStorage.code)
+						.then(function(respuesta){
+							$rootScope.estadoUsuariosAdmin="";
+							$rootScope.estadoUsuariosTerceros ="";
+							$rootScope.estadoLogout = "";
+							$rootScope.estadoVerificar = "";
+							$rootScope.estadoEntrar = "";
+							$rootScope.estadoDevolverRecetas = "";
+							$rootScope.estadoVerificarRecetas = "";
+							localStorage.clear();
+							$location.url('/home');	
+						},function(error){
+							$rootScope.estadoUsuariosAdmin="";
+							$rootScope.estadoUsuariosTerceros ="";
+							$rootScope.estadoLogout = "";
+							$rootScope.estadoVerificar = "";
+							$rootScope.estadoEntrar = "";
+							$rootScope.estadoDevolverRecetas = "";
+							$rootScope.estadoVerificarRecetas = "";
+							localStorage.clear();
+							$location.url('/home');	
+						});
+				
 			}
 
+			
 
 			inicioOperativa();
 

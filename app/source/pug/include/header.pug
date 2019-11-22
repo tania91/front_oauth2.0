@@ -11,8 +11,9 @@ div(ng-controller = 'HomeCtrl')
 						h3#subtitulo {{literales.cabecera.titulo2}}
 				td
 					table
+						
 						tr#buscador
-							
 							td
 								input#menuBotonLogin(ng-if="estadoVerificar == '' || estadoVerificar=='ERROR'", type="button", value="LogIn", name="buscador", ng-click="login()")
 								input#menuBotonLogin(ng-if="estadoVerificar=='OK'", type="button", value="LogOut", name="buscador", ng-click="logout()")
+						

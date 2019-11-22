@@ -4,7 +4,7 @@ angular.module('app')
 			this.getConfig = function(){
 				return {
 					"propio":{
-						"client_id": "nhfgbdt.F4KJUasnzpriWPKMVNHF9",
+						"client_id": "nhfgbdt.F4KJUasnzpriWPKMVNHF98",
 						"client_secret": "375252635769272e6171675b4b3279707e20306e3f253e79592b352058"
 					},
 					"tercero": {
@@ -15,4 +15,4 @@ angular.module('app')
 				};
 			};
 			
-	});
+	});8

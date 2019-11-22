@@ -57,7 +57,9 @@ angular.module('app')
 					},
 					"errores":{
 						"tiempo": "JWT expired",
-						"credenciales": "Authentication Failed: Bad credentials"
+						"credenciales": "Authentication Failed: Bad credentials",
+						"tokenErroneo": "Unable to read JSON value:",
+						"bearerErroneo": "Illegal base64url character: ' '"
 						
 					},
 					"status":{

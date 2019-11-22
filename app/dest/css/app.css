@@ -159,6 +159,12 @@
     border-radius: 5px;
     margin-left: 373px;
 }
+.posErrorLogout{
+    margin-top: 5px;
+    position: absolute;
+    margin-left: 657px;
+    color: #ff0000;
+}
 
 .posLogin{
 	margin-top: 159px;
@@ -167,7 +173,7 @@
 }
 .posEntrada{
 	background-color: #f2f2f2;
-    margin-bottom: 100px;
+    margin-bottom: 237px;
     margin-top: 155px;
     margin-left: 37%;
     border-style: solid;
@@ -591,6 +597,12 @@ label[for="botonCargarImagen"] path {
     margin-left: 286px;
     background-color: #f2f2f2;
 }
+.contenedorPgnVacio{
+    width: 1326px;
+    margin-left: 286px;
+    background-color: #f2f2f2;
+    height: 325px;
+}
 .tabla{
 	position: static;
 }
@@ -652,6 +664,16 @@ label[for="botonCargarImagen"] path {
 
 .estiloPie{
     margin-top: 20px;
+    margin-bottom: 20px;
+}
+.text-left{
+    text-align: left;
+}
+.text-right{
+    text-align: right;
+}
+.text-top{
+    margin-top: -17px;
 }
 .separador{
     border-top-style: dashed;

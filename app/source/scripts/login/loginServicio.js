@@ -34,7 +34,7 @@ angular.module('app' )
 			var cliente_id = ConfigClientCtrl.getConfig().propio.client_id;
 			var client_secret = ConfigClientCtrl.getConfig().propio.client_secret;
 
-			var model = "grant_type=password&client_id="+cliente_id+"&client_secret="+client_secret+"&username=" + registro.usuario + "&password=" + btoa(registro.contrasenia);
+			var model = "grant_type=password&client_id="+cliente_id+"&client_secret="+btoa(client_secret)+"&username=" + registro.usuario + "&password=" + btoa(registro.contrasenia);
 
 			return $http({
 				method:"POST",

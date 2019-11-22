@@ -83,7 +83,7 @@ angular.module('app' )
 		this.buscarUsuarioConToken = function(token, code, tipoConeccion){
 
 			var url = "";
-			if(code != undefined || tipoConeccion == "CONSSO"){
+			if(code != undefined ){
 				url = "https://localhost:8446/users/user";
 			}else{
 				url = "https://localhost:8445/users/user"
@@ -97,11 +97,36 @@ angular.module('app' )
 					'Authorization': token
 				}
 			})
+	
+		};
+
+		this.logout = function(token, code, tipoConeccion){
+			var cliente_id = ConfigClientCtrl.getConfig().propio.client_id;
+			var client_secret = ConfigClientCtrl.getConfig().propio.client_secret;
+
+			var model = "token="+token+"&token_type_hint=access_token";
+
+			var url = "";
+			if(code != undefined || tipoConeccion == "CONSSO"){
+				url = "https://localhost:8446/oauth/tokens/revoke";
+			}else{
+				url = "https://localhost:8445/oauth/tokens/revoke"
+			}
+
+			return $http({
+				method:"POST",
+				url:url,
+				data: model,
+				withCredentials: false,
+				headers:{
+					'Accept': 'application/json ',
+					'Authorization': 'Basic ' + btoa(cliente_id+':' +client_secret),
+  					'Content-type': 'application/x-www-form-urlencoded'
+				}
+			})
+				
 			
-				
-					
-				
-			};
+		};
 
 		
 		

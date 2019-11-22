@@ -1,7 +1,7 @@
 
 <div class="contenido" ng-controller="PgnPrincipalCtrl">
   <div class="errorContent" ng-if="estado == 'ERROR' ">
-    <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+    <div><img class="iconoError2" src="/PFG/oauth2.0/app/image/error.png"/></div>
     <div class="mensajeError2">
       <h2>Se ha producido un error. </h2>
       <p></p>
@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="errorContent" ng-if="estadoDevolverRecetas == 'ERROR' ">
-    <div><img class="iconoError2" src="/PFG/Front/app/image/error.png"/></div>
+    <div><img class="iconoError2" src="/PFG/oauth2.0/app/image/error.png"/></div>
     <div class="mensajeError2">
       <h2>Se ha producido un error. </h2>
       <p></p>
@@ -57,10 +57,10 @@
     </div>
   </div>
   <div class="loading" ng-if="estado=='CARGANDO'"> <img style="display:block; margin:0 auto;" src="/PFG/oauth2.0/app/image/loading.gif"/></div>
-  <div class="contenedorTitlo" ng-if="estado=='HAYDATOS'"> 
+  <div class="contenedorTitlo" ng-if="estado=='HAYDATOS' || estado=='NOHAYDATOS'"> 
     <h2 id="tituloReceta">{{literales.recetas.receta}} </h2>
   </div>
-  <div class="contenedorPgn" ng-if="estado=='NOHAYDATOS'"> 
+  <div class="contenedorPgnVacio" ng-if="estado=='NOHAYDATOS'"> 
     <h1>{{literales.recetas.noReceta}} </h1>
   </div>
   <div class="contenedorPgn" ng-if="estado=='HAYDATOS'"> 
@@ -75,9 +75,9 @@
       </tr>
     </table>
     <div class="btn-group posBotonPaginacion">
-      <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage == 0" ng-click="currentPage = currentPage - 1"></button>
+      <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage == 0" ng-click="currentPage = currentPage - 1">{{literales.recetas.derecha}}</button>
       <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage == page.no - 1" ng-click="setPage(page.no)" ng-repeat="page in pages">{{page.no}}</button>
-      <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage &gt;= listadoRecetas.length/pageSize - 1" ng-click="currentPage = currentPage + 1"></button>
+      <button class="buttonPaginacion btn btn-default" type="button" ng-disabled="currentPage &gt;= listadoRecetas.length/pageSize - 1" ng-click="currentPage = currentPage + 1">{{literales.recetas.izquierda}}</button>
     </div>
   </div>
 </div>

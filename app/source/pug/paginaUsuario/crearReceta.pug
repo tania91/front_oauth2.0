@@ -52,12 +52,12 @@ div.saltoContenedor(ng-controller = 'CrearRecetaCtrl')
 					md-content.descripcionContenedor
 						md-input-container.md-block.md-input-has-value
 							div.md-resize-wrapper
-								textarea.contenedorDescripcion(name="descripcion" ng-model="receta.descripcionReceta" md-maxlength="700" required md-select-on-focus)
+								textarea.contenedorDescripcion(name="descripcion" ng-model="receta.descripcionReceta" md-maxlength="1000" required md-select-on-focus)
 							div(ng-messages="recetaForm.descripcion.$error" role="alert" multiple) 
 								div(ng-message="required" class="my-message") La descripcion de la receta no puede ser vacia 
 								div(ng-message="md-maxlength" class="my-message")  La descripcion no puede tenel más de 500 caracteres
 		
-			div.botonDetalleReceta 
+			div.botonDetalleReceta
 				input.botonRecoger(type="submit" value="Guardar" ng-click="recogerImagen()")
 				input.botonRecoger.posBotonVolver(type="button" value="Volver" ng-click="volver()")
 
