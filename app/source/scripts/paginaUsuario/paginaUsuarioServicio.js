@@ -5,7 +5,7 @@ angular.module('app' )
 		this.guardarReceta = function(model, token){
 			return $http({
 				method:"POST",
-				url:"https://localhost:8445/recipes/save",
+				url:"https://resourceserver.es:8445/recipes/save",
 				data: model,
 				withCredentials: false,
 				headers:{
@@ -21,7 +21,7 @@ angular.module('app' )
 		this.buscarRecetas = function(token){
 			return $http({
 				method:"GET",
-				url:"https://localhost:8445/recipes/recipes",
+				url:"https://resourceserver.es:8445/recipes/recipes",
 				withCredentials: false,
 				headers:{
 					'Accept': 'application/json ',

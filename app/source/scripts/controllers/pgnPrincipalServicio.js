@@ -7,8 +7,7 @@ angular.module('app' )
 		this.buscarTodasRecetas = function(){
 				return $http({
 					method:"GET",
-					url:"https://localhost:8445/recipes/all",
-					withCredentials: false
+					url:"https://resourceserver.es:8445/recipes/all"
 					
 				})
 					
@@ -20,11 +19,11 @@ angular.module('app' )
 			var cliente_id = ConfigClientCtrl.getConfig().tercero.client_id;
 			var client_secret = ConfigClientCtrl.getConfig().tercero.client_secret;
 
-			var data = "grant_type=authorization_code&redirect_uri=http://www.cocinarusa.es:8081/PFG/oauth2.0/app/dest/html/#!/&code="+ code;
+			var data = "grant_type=authorization_code&redirect_uri=http://www.cocinarusa.es:80/PFG/oauth2.0/app/dest/html/#!/&code="+ code;
 
 			return $http({
 				method:"POST",
-				url:"https://localhost:8446/oauth/tokens",
+				url:"https://authorizationserver.es:8446/oauth/tokens",
 				data: data,
 				withCredentials: false,
 				headers:{
@@ -41,7 +40,7 @@ angular.module('app' )
 			
 			return $http({
 				method:"GET",
-				url:"https://localhost:8445/recipes/user/" + flag,
+				url:"https://resourceserver.es:8445/recipes/user/" + flag,
 				withCredentials: false,
 				headers:{
 					'Authorization': token
@@ -56,11 +55,11 @@ angular.module('app' )
 			
 
 			if(code != undefined){
-				url = "https://localhost:8446/oauth/tokens";
+				url = "https://authorizationserver.es:8446/oauth/tokens";
 				var cliente_id = ConfigClientCtrl.getConfig().tercero.client_id;
 				var client_secret = ConfigClientCtrl.getConfig().tercero.client_secret;
 			}else{
-				url = "https://localhost:8445/oauth/tokens"
+				url = "https://resourceserver.es:8445/oauth/tokens"
 				var cliente_id = ConfigClientCtrl.getConfig().propio.client_id;
 				var client_secret = ConfigClientCtrl.getConfig().propio.client_secret;
 			}
@@ -84,9 +83,9 @@ angular.module('app' )
 
 			var url = "";
 			if(code != undefined ){
-				url = "https://localhost:8446/users/user";
+				url = "https://authorizationserver.es:8446/users/user";
 			}else{
-				url = "https://localhost:8445/users/user"
+				url = "https://resourceserver.es:8445/users/user"
 			}
 			
 			return $http({
@@ -108,9 +107,9 @@ angular.module('app' )
 
 			var url = "";
 			if(code != undefined || tipoConeccion == "CONSSO"){
-				url = "https://localhost:8446/oauth/tokens/revoke";
+				url = "https://authorizationserver.es:8446/oauth/tokens/revoke";
 			}else{
-				url = "https://localhost:8445/oauth/tokens/revoke"
+				url = "https://resourceserver.es:8445/oauth/tokens/revoke"
 			}
 
 			return $http({

@@ -5,7 +5,7 @@ angular.module('app' )
 		this.crearUsuario = function(model){
 				return $http({
 					method:"POST",
-					url:"https://localhost:8445/users/save",
+					url:"https://resourceserver.es:8445/users/save",
 					data: model,
 					withCredentials: false,
 					headers:{
@@ -19,7 +19,7 @@ angular.module('app' )
 			this.buscarPorNombre = function(model){
 				return $http({
 					method:"POST",
-					url:"https://localhost:8445/users/findByName",
+					url:"https://resourceserver.es:8445/users/findByName",
 					data: model,
 					withCredentials: false,
 					headers:{
@@ -38,7 +38,7 @@ angular.module('app' )
 
 			return $http({
 				method:"POST",
-				url:"https://localhost:8445/oauth/tokens",
+				url:"https://resourceserver.es:8445/oauth/tokens",
 				data: model,
 				withCredentials: false,
 				headers:{
@@ -58,7 +58,7 @@ angular.module('app' )
 
 			return $http({
 					method:"GET",
-					url:"https://localhost:8446/oauth/authorize?response_type=code&client_id="+cliente_id+"&redirect_uri=http://www.cocinarusa.es:8081/PFG/oauth2.0/app/dest/html/#!/"
+					url:"https://authorizationserver.es:8446/oauth/authorize?response_type=code&client_id="+cliente_id+"&redirect_uri=http://www.cocinarusa.es:80/PFG/oauth2.0/app/dest/html/#!/"
 					
 				})
 			

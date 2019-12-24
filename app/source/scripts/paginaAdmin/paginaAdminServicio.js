@@ -7,9 +7,9 @@ angular.module('app' )
 		this.devolverUsuarios = function(token, tipoUsuario){
 			var url = "";
 			if(tipoUsuario != "propio"){
-				url = "https://localhost:8446/admin/all/users";
+				url = "https://authorizationserver.es:8446/admin/all/users";
 			}else{
-				url = "https://localhost:8445/admin/all/users"
+				url = "https://resourceserver.es:8445/admin/all/users"
 			}
 			return $http({
 				method:"GET",
@@ -29,7 +29,7 @@ angular.module('app' )
 			
 			return $http({
 				method:"DELETE",
-				url:"https://localhost:8445/admin/delete/"+id,
+				url:"https://resourceserver.es:8445/admin/delete/"+id,
 				withCredentials: false,
 				headers:{
 					'Accept': 'application/json ',
@@ -45,7 +45,7 @@ angular.module('app' )
 			
 			return $http({
 				method:"GET",
-				url: "https://localhost:8445/admin/all/recipe",
+				url: "https://resourceserver.es:8445/admin/all/recipe",
 				withCredentials: false,
 				headers:{
 					'Accept': 'application/json ',
